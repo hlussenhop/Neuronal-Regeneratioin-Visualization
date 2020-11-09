@@ -1,4 +1,4 @@
-﻿date,index,side,length(um),regen_type,age,re-image_time,cut_type,genetics
+﻿﻿date,index,side,length,regen_type,age,re_image_time,cut_type,genetics
 7/27/2015,1b,L,14.205,3,L2,12hr,axon,wild-type
 7/27/2015,1c,L,4.508,1,L2,12hr,axon,wild-type
 7/27/2015,1f,L,17.799,2,L2,12hr,axon,wild-type
