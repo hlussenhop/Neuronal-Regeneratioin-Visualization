@@ -19,7 +19,7 @@ function legend() {
 	// Legend Data
 	const legend_width = 150
 	const legend_height = 200
-	const legend_x = 10
+	const legend_x = 700
 	const legend_y = 740
 	const y_incr = 20
 	const x_incr = 10
