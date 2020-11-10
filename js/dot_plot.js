@@ -46,17 +46,12 @@ function chart() {
 
   //construct a dot plot
   function dotPlot(data, avgData, age, step) {
-    //construct y axis
 
+    // modify datasets so they can be used with the dot plot
     data = fixData(data, age);
-
     avgData = fixData(avgData, age);
 
-    //data = getDataCategories(data);
-    //data = getDataFromAge(data, age);
-    //avgData = getDataCategories(avgData);
-    //avgData = getDataFromAge(avgData, age);
-
+    //construct a y axis
     let y = d3
       .scaleLinear()
       .domain([0, 100])
@@ -92,6 +87,8 @@ function chart() {
         return y(d.length);
       });
 
+    //Add vertical bars to the dot plot
+    //A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
     svg
       .selectAll(".bar")
       .data(avgData)
@@ -111,7 +108,9 @@ function chart() {
       })
       .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
-      svg
+    // add a horizontal bar to the data
+    // shows the location of the average length of the dots and makes the data more readable
+    svg
       .selectAll(".bar")
       .data(avgData)
       .enter()
@@ -130,13 +129,8 @@ function chart() {
       })
       .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
-    svg
-      .append("line")
-      .attr("x1", 23)
-      .attr("x2", 214)
-      .attr("y1", 243)
-      .attr("y2", 234);
-
+    
+    // add the text/labels in the 
     svg
       .append("text")
       .attr("x", -5)
@@ -157,7 +151,7 @@ function chart() {
 
     svg
       .append("text")
-      .attr("x", 380)
+      .attr("x", 370)
       .attr("y", 50)
       .text("Young Adult cut, 24 reimage");
 
@@ -170,6 +164,9 @@ function chart() {
 
     fixCircles();
   }
+
+  // adds a 'category' column to the data which is used to match the data to its categorical data channel
+  // filters data based on the age and reimaging time of the particular datapoint
   function fixData(data, age) {
     newData = [];
     for (i = 0; i < data.length; i++) {
@@ -210,60 +207,11 @@ function chart() {
       }
       
     }
-    //console.log(age)
-    //console.log(data)
+
     return newData;
   }
 
-  function getStd() {}
-  /*
-  // adjust the dataset
-  function getDataCategories(data) {
-    newData = [];
-    for (i = 0; i < data.length; i++) {
-      d = data[i];
-
-      let temp = "";
-
-      if (d.genetics == "wild-type" || d.genetics == "wt") {
-        temp = temp + "wt ";
-      } else if (d.genetics == "dlk-1") {
-        temp = temp + "dlk-1 ";
-      }
-
-      if (d.cutType == "axon") {
-        temp = temp + "axon";
-      } else if (d.cutType == "a+d") {
-        temp = temp + "a+d";
-      }
-      d["category"] = temp;
-    }
-    console.log(data)
-    return data;
-  }
-
-  function getDataFromAge(data, age) {
-    for (i = 0; i < data.length; i++) {
-      d = data[i];
-
-      if (age == "L2 cut, 12 h reimage") {
-        if (d.age != "L2"  || d.reImageTime != "12hr") {
-          data.splice(i, 1);
-        }
-      } else if (age == "L2 cut, 24 h reimage") {
-        if (d.age != "L2" || d.reImageTime != "24hr") {
-          data.splice(i, 1);
-        }
-      } else if (age == "young adult cut, 24 h reimage") {
-        if (d.age != "YA" || d.reImageTime != "24hr") {
-          data.splice(i, 1);
-        }
-      }
-    }
-
-    return data;
-  }
-*/
+  // removes and extra circles that are plotted wrong
   function fixCircles() {
     arr = Array.from(document.getElementsByTagName("circle"));
 
@@ -275,53 +223,3 @@ function chart() {
   }
 }
 chart();
-
-/*
-function setX(dot, dots, base) {
-  dots = filterDots(dot, dots);
-  //console.log(dots)
-  //console.log(dots[i].cy.baseVal.value);
-  direction = Math.floor(Math.random * 2);
-  //console.log(direction);
-  move = base;
-  while(isOverlap(dot,dots,move)){
-    if(direction = 0){
-      move = move - 6;
-    } else {
-      move = move + 6;
-    }
-  }
-  console.log(move)
-  return move;
-}
-
-function isOverlap(dot, dots, move){
-  for (i = 0; i < dots.length; i++){
-    //console.log(dot.cx.baseVal.value)
-    if(dots[i].cx.baseVal.value == 0){
-      return false;
-    }
-    let distance = Math.sqrt((dots[i].cx.baseVal.value - dot.cx.baseVal.value + move)^2 +(dots[i].cx.baseVal.value - dot.cx.baseVal.value)^2);
-    if(distance > 6){
-      return true
-    } 
-  }
-  return false;
-}
-
-function filterDots(dot, dots) {
-  let temp = Array.prototype.slice.call(dots);
-  //console.log(dot.age + "_" + dot.reImageTime+ "_" + dot.category + "_" + dot.length + "_circle")
-  //console.log(temp[0].id)
-  //console.log(dot)
-  for (i = 0; i < temp.length; i++) {
-    if (temp[i].id == dot.id) {
-      temp.splice(i, 1);
-    }
-   
-  }
-  //
-  //console.log(dot.cy)
-  return temp;
-}
-*/
