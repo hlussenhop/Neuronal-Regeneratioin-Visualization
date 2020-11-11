@@ -141,7 +141,7 @@ function chart() {
 
     svg
       .append("text")
-      .attr("x", 170)
+      .attr("x", 160)
       .attr("y", 495)
       .text("Experimental Conditions");
 
