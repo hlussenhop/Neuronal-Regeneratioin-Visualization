@@ -1,7 +1,7 @@
 function stacked_bar_chart() {
 	let parseDate = d3.timeParse("%m/%d/%Y");
 
-	let margin = { top: 10, right: 30, bottom: 30, left: 60 },
+	let margin = { top: 50, right: 30, bottom: 30, left: 100 },
 	  width = 650 - margin.left - margin.right,
 	  height = 1000 - margin.top - margin.bottom;
 
@@ -13,89 +13,93 @@ function stacked_bar_chart() {
 	  .append("g")
 	  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.csv("data/stacked_bar_chart_csv_3.csv", function (data) {
+	d3.csv("data/stacked_2a.csv", function (data) {
 	  return {
-		percentage: +data.percentage,
-		regenType: data.regen_type,
-		age: data.age,
 		reImageTime: data.re_image_time,
-		cutType: data.cut_type,
-		genetics: data.genetics,
-		col_name: data.col_name
+
+		col_name: data.col_name,
+		none: data.none,
+		not_to_ring: data.not_to_ring,
+		to_ring: data.to_ring,
+		along_ring: data.along_ring,
+		full_length: data.full_length
 	  };
 	}).then(function (d) {
-	  chart(d, "L2 cut, 12 h reimage", 1);
-	  chart(d, "L2 cut, 24 h reimage", 2);
-	  chart(d, "young adult cut, 24 h reimage", 3);
+	  chart(d, "12hr", 1);
+	  chart(d, "24hr", 2);
+	  chart(d, "24hr_YA", 3);
 	});
 	
-	function fixData(data, age) {
-	  newData = [];
-	  for (i = 0; i < data.percentage; i++) {
-		d = data[i];
-
-		let temp = "";
-
-		if (d.genetics == "wild-type") {
-		  temp = temp + "wt ";
-		} else if (d.genetics == "dlk-1") {
-		  temp = temp + "dlk-1 ";
+	function divideByReimage(reImageTime) {
+		function returned(d) {
+			return (d.reImageTime == reImageTime)
+				
+			
 		}
-
-		if (d.cutType == "axon") {
-		  temp = temp + "axon";
-		} else if (d.cutType == "a+d") {
-		  temp = temp + "a+d";
-		}
-		d["category"] = temp;
-
-		if (age == "L2 cut, 12 h reimage") {
-		  if (d.age != "L2" || d.reImageTime == "12hr") {
-			data.splice(i, 1);
-		  }
-		} else if (age == "L2 cut, 24 h reimage") {
-		  if (d.age != "L2" || d.reImageTime == "24hr") {
-			data.splice(i, 1);
-		  }
-		} else if (age == "young adult cut, 24 h reimage") {
-		  if (d.age != "YA" || d.reImageTime == "24hr") {
-			data.splice(i, 1);
-		  }
-		}
-	  }
-
-	  return data;
+		return returned;
 	}
 	
-	function swap(json){
-	  var ret = {};
-	  for(var key in json){
-		ret[json[key]] = key;
-	  }
-	  return ret;
-	}
 
 	//construct a stacked bar chart
 	function chart(data, age, step) {
 		console.log("chart called");
 	  //construct y axis
+	  
+	  console.log(data);
+	  
+	  data = data.filter(divideByReimage(age));
+	  
+	  console.log(data);
+	  
 	  let y = d3.scaleLinear().domain([0, 100]).range([height, 500]);
-	  svg.append("g").call(d3.axisLeft(y));
+	  //svg.append("g").call(d3.axisLeft(y));
 	  
-	  let subgroups = ["none", "not to ring", "to ring", "along ring", "full length"];
 	  
-	  data = fixData(data, age);
+	  var y1 = d3.scaleLinear()
+		.domain([0, 1])
+		.range([ height-60, 500 ]);
+		
+		
+	  svg.append("g").call(d3.axisLeft(y1).tickFormat(d3.format('~%')));
+	  
+	  svg.append("text")
+		.attr("x", 150)
+		.attr("y", 900)
+		.text("Experimental Conditions");
+		
+	  svg.append("text")
+		.attr("transform", "rotate(-90)")
+		.attr("x", -775)
+		.attr("y", -40)
+		.text("Percent Regeneration");
+		
+	  svg.append("text")
+		.attr("x", 40)
+		.attr("y", 490)
+		.text("Neuronal Percent Regeneration by Regeneration Type");
+	  
+	  
+	  let subgroups = ["none", "not_to_ring", "to_ring", "along_ring", "full_length"];
+	  
+	  //data = fixData(data, age);
 	  
 	  
 	  let groups = ["wt axon", "wt a+d", "dlk-1 a+d"];
 	  
+	  var x1 = d3.scaleBand()
+		  .domain(groups)
+		  .range([(step-1)*(width/3) + 5, (step)*(width/3)])
+		  .padding([0.2])
+	  
+		  
+	  
 	  let color = d3.scaleOrdinal()
 		.domain(subgroups)
-		.range(['#e41a1c','#377eb8','#4daf4a', 'purple', 'pink'])
+		.range(['purple','blue','green', 'yellow', 'red'])
 		
 	  let stackedData = d3.stack()
 		.keys(subgroups)
-		(swap(data))
+		(data)
 	  
 	  console.log(stackedData);
 	  
@@ -108,26 +112,29 @@ function stacked_bar_chart() {
 		.rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
 		.padding(0.1)
 		.domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
+	  
 	  svg
 		.append("g")
-		.attr("transform", "translate(-16," + height + ")")
+		.attr("transform", "translate(-16," + (height-60) + ")")
 		.call(d3.axisBottom(x));
 
 	  // add dots to the dot-plot
 	  svg.append("g")
+		svg.append("g")
 		.selectAll("g")
 		// Enter in the stack data = loop key per key = group per group
 		.data(stackedData)
 		.enter().append("g")
-		  .attr("fill", function(d) { return color(d.regenType); })
+		  .attr("fill", function(d) { return color(d.key); })
 		  .selectAll("rect")
 		  // enter a second time = loop subgroup per subgroup to add all rectangles
 		  .data(function(d) { return d; })
 		  .enter().append("rect")
-			.attr("x", function(d) { return 50; })
-			.attr("y", function(d) { return 50; })
-			.attr("height", function(d) { return d.percentage; })
-			.attr("width", 10);
+			.attr("x", function(d) { return x1(d.data.col_name); })
+			.attr("y", function(d) { return y1(d[1]); })
+			.attr("height", function(d) { return y1(d[0]) - y1(d[1]); })
+			.attr("width",40)
+			.style("stroke", "black")
 
 	}
 }

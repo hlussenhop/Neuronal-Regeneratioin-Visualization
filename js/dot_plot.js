@@ -1,7 +1,7 @@
 function chart() {
   let parseDate = d3.timeParse("%m/%d/%Y");
 
-  let margin = { top: 10, right: 30, bottom: 30, left: 60 },
+  let margin = { top: 10, right: 30, bottom: 30, left: 100 },
     width = 650 - margin.left - margin.right,
     height = 510 - margin.top - margin.bottom;
 
