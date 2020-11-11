@@ -1,14 +1,14 @@
 // Stacked Bar Chart Data
 
 function legend() {
-	let margin1 = {
+	let margin = {
 	  top: 35,
 	  left: 120 ,
 	  right: 30,
 	  bottom: 50
 	},
-	width = 500 - margin1.left - margin1.right,
-	height = 500 - margin1.top - margin1.bottom;
+	width = 500 - margin.left - margin.right,
+	height = 500 - margin.top - margin.bottom;
 
 	let svg_stack_bar = d3.select('#dot_plot')
 	  .append('svg')
@@ -35,7 +35,7 @@ function legend() {
 
 	// legend title
 	svg_stack_bar.append("text")
-	  .attr("x", ((legend_x + legend_width)/2))
+	  .attr("x", ((legend_x + (legend_width)/2)))
 	  .attr("y", (legend_y + x_incr))
 	  .text("Regeneration Type")
 	  .style("font-size", "10px")
