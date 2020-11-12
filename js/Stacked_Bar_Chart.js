@@ -55,7 +55,7 @@ function stacked_bar_chart() {
 	  //svg.append("g").call(d3.axisLeft(y));
 	  
 	  
-	  var y1 = d3.scaleLinear()
+	  let y1 = d3.scaleLinear()
 		.domain([0, 1])
 		.range([ height-60, 500 ]);
 		
@@ -86,7 +86,7 @@ function stacked_bar_chart() {
 	  
 	  let groups = ["wt axon", "wt a+d", "dlk-1 a+d"];
 	  
-	  var x1 = d3.scaleBand()
+	  let x1 = d3.scaleBand()
 		  .domain(groups)
 		  .range([(step-1)*(width/3) + 5, (step)*(width/3)])
 		  .padding([0.2])
