@@ -46,7 +46,6 @@ function chart() {
 
   //construct a dot plot
   function dotPlot(data, avgData, age, step) {
-
     // modify datasets so they can be used with the dot plot
     data = fixData(data, age);
     avgData = fixData(avgData, age);
@@ -69,6 +68,8 @@ function chart() {
       .attr("transform", "translate(-16," + (height - 20) + ")")
       .call(d3.axisBottom(x));
 
+
+    let selected
     // add dots to the dot-plot
     svg
       .selectAll(".bar")
@@ -76,7 +77,7 @@ function chart() {
       .enter()
       .append("circle")
       .attr("r", 3)
-      .attr("class", "dot")
+
       .attr("cx", function (d) {
         direction =
           (Math.round(Math.random()) * 2 - 1) *
@@ -85,6 +86,24 @@ function chart() {
       })
       .attr("cy", function (d) {
         return y(d.length);
+      })
+      .attr("class", function (d) {
+        return d.compositeCategory;
+      })
+      // select dots and color them on mouseover
+      .on("mouseover", function (d) {
+        selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
+        console.log(selected)
+        selected.attr("class", function (d) {
+          return d.compositeCategory + " regen" + d.regenType;
+        }).attr("r",4);
+        console.log(d3.select(this).attr("class"));
+      })
+      // deselect dots and color black upon mouseout
+      .on("mouseout", function (d) {
+        selected.attr("class", function (d) {
+          return d.compositeCategory;
+        }).attr("r",3);
       });
 
     //Add vertical bars to the dot plot
@@ -129,8 +148,7 @@ function chart() {
       })
       .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
-    
-    // add the text/labels in the 
+    // add the text/labels in the
     svg
       .append("text")
       .attr("x", -5)
@@ -171,7 +189,7 @@ function chart() {
     newData = [];
     for (i = 0; i < data.length; i++) {
       d = data[i];
-    
+
       let temp = "";
       if (d != undefined) {
         if (d.genetics == "wild-type") {
@@ -188,10 +206,11 @@ function chart() {
 
         d["category"] = temp;
 
+        d["compositeCategory"] = d.category.replace(/\s/g, '') + "" + d.age + d.reImageTime;
+
         if (age == "L2 cut, 12 h reimage") {
-          console.log("g")
+          console.log("g");
           if (d.age == "L2" && d.reImageTime == "12hr") {
-        
             newData.push(d);
           }
         } else if (age == "L2 cut, 24 h reimage") {
@@ -200,12 +219,10 @@ function chart() {
           }
         } else if (age == "young adult cut, 24 h reimage") {
           if (d.age == "YA" && d.reImageTime == "24hr") {
-          
             newData.push(d);
           }
         }
       }
-      
     }
 
     return newData;

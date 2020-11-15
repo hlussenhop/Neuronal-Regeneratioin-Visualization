@@ -81,3 +81,35 @@ h1, h2, h3 {
 		box-shadow:4px 4px 10px rgba(0,0,0,0.8);
 	}
 }
+
+circle.selected {
+	fill: pink;
+
+  }
+  
+.regen0 {
+	fill: purple;
+	border: black;
+
+}
+
+.regen1 {
+	fill: blue;
+
+}
+
+.regen2 {
+	fill: green;
+
+}
+
+.regen3 {
+	fill: yellow;
+
+}
+
+.regen4 {
+	fill: red;
+	border: 1px solid black;
+
+}
