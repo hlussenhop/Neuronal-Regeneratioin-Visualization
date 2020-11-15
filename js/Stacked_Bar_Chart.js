@@ -47,13 +47,13 @@ function stacked_bar_chart() {
 	//construct a stacked bar chart
 	function chart(data, age, step) {
 	  
-	  console.log("chart called");
-	  console.log(data);
+	  //console.log("chart called");
+	  //console.log(data);
 	  
 	  // filter the data
 	  data = data.filter(divideByReimage(age));
 	  
-	  console.log(data);
+	  // console.log(data);
 	  
 	  // define domain and range of the y axis
 	  let y1 = d3.scaleLinear()
@@ -104,7 +104,7 @@ function stacked_bar_chart() {
 		.keys(subgroups)
 		(data)
 	  
-	  console.log(stackedData);
+	  //console.log(stackedData);
 
 	  // define the scope of the x axis
 	  let x = d3
