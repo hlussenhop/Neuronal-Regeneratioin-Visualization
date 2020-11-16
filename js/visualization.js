@@ -3,5 +3,8 @@
 ((() => {
 
   console.log('Hello, world!');
+  stacked_bar_chart();
+  
+  
 
 })());
