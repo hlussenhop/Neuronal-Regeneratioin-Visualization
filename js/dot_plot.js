@@ -1,5 +1,15 @@
-function chart() {
+
+
+function dot_plot_chart() {
   let parseDate = d3.timeParse("%m/%d/%Y");
+  
+  let dispatcher = d3.dispatch("selectionUpdated");
+  
+  dispatcher.on("selectionUpdated", function(arg1) {
+	  console.log("hello");
+	  console.log(arg1);
+	  //	console.log(arg2);
+  })
 
   let margin = { top: 10, right: 30, bottom: 30, left: 100 },
     width = 650 - margin.left - margin.right,
@@ -97,7 +107,7 @@ function chart() {
         selected.attr("class", function (d) {
           return d.compositeCategory + " regen" + d.regenType;
         }).attr("r",4);
-        console.log(d3.select(this).attr("class"));
+        //console.log(d3.select(this).attr("class"));
       })
       // deselect dots and color black upon mouseout
       .on("mouseout", function (d) {
@@ -239,4 +249,6 @@ function chart() {
     }
   }
 }
-chart();
+
+dot_plot_chart();
+  

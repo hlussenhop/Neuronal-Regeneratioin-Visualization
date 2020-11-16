@@ -1,5 +1,10 @@
 // stacked bar chart function
+
+var dispatcher = d3.dispatch("selectionUpdated");
+
 function stacked_bar_chart() {
+	
+
 
 	// margins
 	let margin = { top: 50, right: 30, bottom: 30, left: 100 },
@@ -137,7 +142,7 @@ function stacked_bar_chart() {
 			.attr("width",40)
 			.style("stroke", "black")
 			.on("mouseover", highlight)
-			// deselect dots and color black upon mouseout
+			// deselect dots and color black upon mouseou)t
 			.on("mouseout", function (d) {
 			  d3.select(this).classed("selected", false) 
 				
@@ -146,9 +151,15 @@ function stacked_bar_chart() {
 	  function highlight(d) {
 
 		d3.select(this).classed("selected", true)
+		
+		data1 = d3.select(this).data()[0];
+		dispatcher.call("selectionUpdated", this, data1);
+		
+		//dispatcher.call(d
 
 	  }
 
 	}
 }
 // call the function we created
+  stacked_bar_chart();
