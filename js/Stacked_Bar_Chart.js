@@ -27,6 +27,8 @@ function stacked_bar_chart() {
 		to_ring: data.to_ring,
 		along_ring: data.along_ring,
 		full_length: data.full_length
+		
+		
 	  };
 	  // call the chart function 3 times
 	}).then(function (d) {
@@ -134,8 +136,19 @@ function stacked_bar_chart() {
 			.attr("height", function(d) { return y1(d[0]) - y1(d[1]); })
 			.attr("width",40)
 			.style("stroke", "black")
+			.on("mouseover", highlight)
+			// deselect dots and color black upon mouseout
+			.on("mouseout", function (d) {
+			  d3.select(this).classed("selected", false) 
+				
+			});
+			
+	  function highlight(d) {
+
+		d3.select(this).classed("selected", true)
+
+	  }
 
 	}
 }
 // call the function we created
-stacked_bar_chart();

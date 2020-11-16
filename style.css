@@ -87,6 +87,10 @@ circle.selected {
 
   }
   
+.selected {
+	opacity: 0.5;
+}
+  
 .regen0 {
 	fill: purple;
 	border: black;
