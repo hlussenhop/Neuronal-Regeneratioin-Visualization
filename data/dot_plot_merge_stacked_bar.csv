@@ -1,4 +1,4 @@
-﻿﻿date,index,side,length,regen_type,age,re_image_time,cut_type,genetics,re_image_time,col_name,none,not_to_ring,to_ring,along_ring,full_length
+﻿﻿date,index,side,length,regen_type,age,re_image_time,cut_type,genetics,re_image_time_class,col_name,none,not_to_ring,to_ring,along_ring,full_length
 7/27/15,1b,L,14.205,3,L2,12hr,axon,wild-type,12hr,wt axon,0.19047619,0.285714286,0.19047619,0.238095238,0.095238095
 7/27/15,1c,L,4.508,1,L2,12hr,axon,wild-type,12hr,wt a+d,0,0,0.076923077,0.461538462,0.461538462
 7/27/15,1f,L,17.799,2,L2,12hr,axon,wild-type,12hr,dlk-1 a+d,0.933333333,0.066666667,0,0,0
