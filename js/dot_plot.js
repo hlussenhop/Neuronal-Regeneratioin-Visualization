@@ -1,28 +1,11 @@
 
 
 function dot_plot_chart() {
-  let parseDate = d3.timeParse("%m/%d/%Y");
+	
+  console.log("start dot plot chart");
   
-  let dispatcher = d3.dispatch("selectionUpdated");
-  
-  dispatcher.on("selectionUpdated", function(arg1) {
-	  console.log("hello");
-	  console.log(arg1);
-	  //	console.log(arg2);
-  })
 
-  let margin = { top: 10, right: 30, bottom: 30, left: 100 },
-    width = 650 - margin.left - margin.right,
-    height = 510 - margin.top - margin.bottom;
-
-  let svg = d3
-    .select("#dot_plot")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+/*
   Promise.all([
     d3.csv("data/dot_plot_data_csv.csv", function (data) {
       return {
@@ -53,202 +36,249 @@ function dot_plot_chart() {
     dotPlot(d, b, "L2 cut, 24 h reimage", 2);
     dotPlot(d, b, "young adult cut, 24 h reimage", 3);
   });
+  */
+  
+  function returned(data) {
+	  
+	  console.log("started returned");
+	  console.log(data)
+	  
+	  
+	  
+	  //let parseDate = d3.timeParse("%m/%d/%Y");
+  
+	  let dispatcher = d3.dispatch("selectionUpdated");
+	  
+	  dispatcher.on("selectionUpdated", function(arg1) {
+		  console.log("hello dispatch");
+		  console.log(arg1);
+		  //	console.log(arg2);
+	  })
+
+	  let margin = { top: 10, right: 30, bottom: 30, left: 100 },
+		width = 650 - margin.left - margin.right,
+		height = 510 - margin.top - margin.bottom;
+
+	  let svg = d3
+		.select("#dot_plot")
+		.append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	  
+	  
+		function dotPlot(data, age, step) {
+			// modify datasets so they can be used with the dot plot
+			data = fixData(data, age);
+			//avgData = fixData(avgData, age);
+
+			//construct a y axis
+			let y = d3
+			  .scaleLinear()
+			  .domain([0, 100])
+			  .range([height - 20, 70]);
+			svg.append("g").call(d3.axisLeft(y));
+
+			//construct x axis
+			let x = d3
+			  .scaleBand()
+			  .rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
+			  .padding(0.1)
+			  .domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
+			svg
+			  .append("g")
+			  .attr("transform", "translate(-16," + (height - 20) + ")")
+			  .call(d3.axisBottom(x));
+
+
+			let selected
+			// add dots to the dot-plot
+			svg
+			  .selectAll(".bar")
+			  .data(data)
+			  .enter()
+			  .append("circle")
+			  .attr("r", 3)
+
+			  .attr("cx", function (d) {
+				direction =
+				  (Math.round(Math.random()) * 2 - 1) *
+				  (6 * Math.floor(Math.random() * 3));
+				return x(d.category) + 6 + direction;
+			  })
+			  .attr("cy", function (d) {
+				return y(d.length);
+			  })
+			  .attr("class", function (d) {
+				return d.compositeCategory;
+			  })
+			  // select dots and color them on mouseover
+			  .on("mouseover", function (d) {
+				selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
+				console.log(selected)
+				selected.attr("class", function (d) {
+				  return d.compositeCategory + " regen" + d.regenType;
+				}).attr("r",4);
+				//console.log(d3.select(this).attr("class"));
+			  })
+			  // deselect dots and color black upon mouseout
+			  .on("mouseout", function (d) {
+				selected.attr("class", function (d) {
+				  return d.compositeCategory;
+				}).attr("r",3);
+			  });
+
+			//Add vertical bars to the dot plot
+			//A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
+			/*
+			svg
+			  .selectAll(".bar")
+			  .data(avgData)
+			  .enter()
+			  .append("line")
+			  .attr("x1", function (d) {
+				return x(d.category) + 6;
+			  })
+			  .attr("x2", function (d) {
+				return x(d.category) + 6;
+			  })
+			  .attr("y1", function (d) {
+				return y(d.average - d.stdev);
+			  })
+			  .attr("y2", function (d) {
+				return y(d.average + d.stdev);
+			  })
+			  .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
+
+			// add a horizontal bar to the data
+			// shows the location of the average length of the dots and makes the data more readable
+			svg
+			  .selectAll(".bar")
+			  .data(avgData)
+			  .enter()
+			  .append("line")
+			  .attr("x1", function (d) {
+				return x(d.category) - 12;
+			  })
+			  .attr("x2", function (d) {
+				return x(d.category) + 24;
+			  })
+			  .attr("y1", function (d) {
+				return y(d.average);
+			  })
+			  .attr("y2", function (d) {
+				return y(d.average);
+			  })
+			  .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
+
+			*/
+			// add the text/labels in the
+			svg
+			  .append("text")
+			  .attr("x", -5)
+			  .attr("y", 10)
+			  .text(
+				"Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
+			  );
+
+			svg
+			  .append("text")
+			  .attr("x", 160)
+			  .attr("y", 495)
+			  .text("Experimental Conditions");
+
+			svg.append("text").attr("x", 20).attr("y", 50).text("L2 cut, 12 reimage");
+
+			svg.append("text").attr("x", 200).attr("y", 50).text("L2 cut, 24 reimage");
+
+			svg
+			  .append("text")
+			  .attr("x", 370)
+			  .attr("y", 50)
+			  .text("Young Adult cut, 24 reimage");
+
+			svg
+			  .append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("x", -350)
+			  .attr("y", -30)
+			  .text("Length Regenerated (um)");
+
+			fixCircles();
+		  }
+
+		  // adds a 'category' column to the data which is used to match the data to its categorical data channel
+		  // filters data based on the age and reimaging time of the particular datapoint
+		  function fixData(data, age) {
+			newData = [];
+			for (i = 0; i < data.length; i++) {
+			  d = data[i];
+
+			  let temp = "";
+			  if (d != undefined) {
+				if (d.genetics == "wild-type") {
+				  temp = temp + "wt ";
+				} else if (d.genetics == "dlk-1") {
+				  temp = temp + "dlk-1 ";
+				}
+
+				if (d.cutType == "axon") {
+				  temp = temp + "axon";
+				} else if (d.cutType == "a+d") {
+				  temp = temp + "a+d";
+				}
+
+				d["category"] = temp;
+
+				d["compositeCategory"] = d.category.replace(/\s/g, '') + "" + d.age + d.reImageTime;
+
+				if (age == "L2 cut, 12 h reimage") {
+				  console.log("g");
+				  if (d.age == "L2" && d.reImageTime == "12hr") {
+					newData.push(d);
+				  }
+				} else if (age == "L2 cut, 24 h reimage") {
+				  if (d.age == "L2" && d.reImageTime == "24hr") {
+					newData.push(d);
+				  }
+				} else if (age == "young adult cut, 24 h reimage") {
+				  if (d.age == "YA" && d.reImageTime == "24hr") {
+					newData.push(d);
+				  }
+				}
+			  }
+			}
+
+			return newData;
+		  }
+
+		  // removes and extra circles that are plotted wrong
+		  function fixCircles() {
+			arr = Array.from(document.getElementsByTagName("circle"));
+
+			for (i = 0; i < arr.length; i++) {
+			  if (arr[i].cx.baseVal.value == 0) {
+				arr[i].remove();
+			  }
+			}
+		  }
+	  
+	  
+		dotPlot(data, "L2 cut, 12 h reimage", 1);
+		dotPlot(data, "L2 cut, 24 h reimage", 2);
+		dotPlot(data, "young adult cut, 24 h reimage", 3);
+  
+	  
+	  
+		return returned;
+  }
 
   //construct a dot plot
-  function dotPlot(data, avgData, age, step) {
-    // modify datasets so they can be used with the dot plot
-    data = fixData(data, age);
-    avgData = fixData(avgData, age);
-
-    //construct a y axis
-    let y = d3
-      .scaleLinear()
-      .domain([0, 100])
-      .range([height - 20, 70]);
-    svg.append("g").call(d3.axisLeft(y));
-
-    //construct x axis
-    let x = d3
-      .scaleBand()
-      .rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
-      .padding(0.1)
-      .domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
-    svg
-      .append("g")
-      .attr("transform", "translate(-16," + (height - 20) + ")")
-      .call(d3.axisBottom(x));
-
-
-    let selected
-    // add dots to the dot-plot
-    svg
-      .selectAll(".bar")
-      .data(data)
-      .enter()
-      .append("circle")
-      .attr("r", 3)
-
-      .attr("cx", function (d) {
-        direction =
-          (Math.round(Math.random()) * 2 - 1) *
-          (6 * Math.floor(Math.random() * 3));
-        return x(d.category) + 6 + direction;
-      })
-      .attr("cy", function (d) {
-        return y(d.length);
-      })
-      .attr("class", function (d) {
-        return d.compositeCategory;
-      })
-      // select dots and color them on mouseover
-      .on("mouseover", function (d) {
-        selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
-        console.log(selected)
-        selected.attr("class", function (d) {
-          return d.compositeCategory + " regen" + d.regenType;
-        }).attr("r",4);
-        //console.log(d3.select(this).attr("class"));
-      })
-      // deselect dots and color black upon mouseout
-      .on("mouseout", function (d) {
-        selected.attr("class", function (d) {
-          return d.compositeCategory;
-        }).attr("r",3);
-      });
-
-    //Add vertical bars to the dot plot
-    //A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
-    svg
-      .selectAll(".bar")
-      .data(avgData)
-      .enter()
-      .append("line")
-      .attr("x1", function (d) {
-        return x(d.category) + 6;
-      })
-      .attr("x2", function (d) {
-        return x(d.category) + 6;
-      })
-      .attr("y1", function (d) {
-        return y(d.average - d.stdev);
-      })
-      .attr("y2", function (d) {
-        return y(d.average + d.stdev);
-      })
-      .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
-
-    // add a horizontal bar to the data
-    // shows the location of the average length of the dots and makes the data more readable
-    svg
-      .selectAll(".bar")
-      .data(avgData)
-      .enter()
-      .append("line")
-      .attr("x1", function (d) {
-        return x(d.category) - 12;
-      })
-      .attr("x2", function (d) {
-        return x(d.category) + 24;
-      })
-      .attr("y1", function (d) {
-        return y(d.average);
-      })
-      .attr("y2", function (d) {
-        return y(d.average);
-      })
-      .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
-
-    // add the text/labels in the
-    svg
-      .append("text")
-      .attr("x", -5)
-      .attr("y", 10)
-      .text(
-        "Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
-      );
-
-    svg
-      .append("text")
-      .attr("x", 160)
-      .attr("y", 495)
-      .text("Experimental Conditions");
-
-    svg.append("text").attr("x", 20).attr("y", 50).text("L2 cut, 12 reimage");
-
-    svg.append("text").attr("x", 200).attr("y", 50).text("L2 cut, 24 reimage");
-
-    svg
-      .append("text")
-      .attr("x", 370)
-      .attr("y", 50)
-      .text("Young Adult cut, 24 reimage");
-
-    svg
-      .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -350)
-      .attr("y", -30)
-      .text("Length Regenerated (um)");
-
-    fixCircles();
-  }
-
-  // adds a 'category' column to the data which is used to match the data to its categorical data channel
-  // filters data based on the age and reimaging time of the particular datapoint
-  function fixData(data, age) {
-    newData = [];
-    for (i = 0; i < data.length; i++) {
-      d = data[i];
-
-      let temp = "";
-      if (d != undefined) {
-        if (d.genetics == "wild-type") {
-          temp = temp + "wt ";
-        } else if (d.genetics == "dlk-1") {
-          temp = temp + "dlk-1 ";
-        }
-
-        if (d.cutType == "axon") {
-          temp = temp + "axon";
-        } else if (d.cutType == "a+d") {
-          temp = temp + "a+d";
-        }
-
-        d["category"] = temp;
-
-        d["compositeCategory"] = d.category.replace(/\s/g, '') + "" + d.age + d.reImageTime;
-
-        if (age == "L2 cut, 12 h reimage") {
-          console.log("g");
-          if (d.age == "L2" && d.reImageTime == "12hr") {
-            newData.push(d);
-          }
-        } else if (age == "L2 cut, 24 h reimage") {
-          if (d.age == "L2" && d.reImageTime == "24hr") {
-            newData.push(d);
-          }
-        } else if (age == "young adult cut, 24 h reimage") {
-          if (d.age == "YA" && d.reImageTime == "24hr") {
-            newData.push(d);
-          }
-        }
-      }
-    }
-
-    return newData;
-  }
-
-  // removes and extra circles that are plotted wrong
-  function fixCircles() {
-    arr = Array.from(document.getElementsByTagName("circle"));
-
-    for (i = 0; i < arr.length; i++) {
-      if (arr[i].cx.baseVal.value == 0) {
-        arr[i].remove();
-      }
-    }
-  }
+  
+  
+  return returned;
 }
 
-dot_plot_chart();
+
   
