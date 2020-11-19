@@ -31,16 +31,40 @@
         reImageTime: data.re_image_time,
         cutType: data.cut_type,
         genetics: data.genetics,
+		
+		ageBar: data.age_bar,
+        reImageTimeBar2: data.re_image_time_bar,
+        cutTypeBar: data.cut_type_bar,
+        geneticsBar: data.genetics_bar
       };
 	}
   ).then(function(d) {
+	  	
+		let dotPlot = dot_plot_chart()
+			.selectionDispatcher(d3.dispatch("updateSelection"))
+		    (d);
 	  
-	stacked_bar_chart()
-	  (d);
+		let stacked1 = stacked_bar_chart()
+			.selectionDispatcher(d3.dispatch("updateSelection"))
+		    (d);
 		
-	dot_plot_chart()
-	  (d);
+			
+		
+		dotPlot.selectionDispatcher().on("updateSelection.test2", function(x) {
+			console.log("hello dispatch good");
+			console.log(x[0]);
+			
+			stacked1.highlightBar(x[0]);
+		})
 	
+	
+		stacked1.selectionDispatcher().on("updateSelection.test", function(x) {
+			console.log("stacked receives dispatch");
+		
+			
+			
+			//stacked1.highlightBar(x);
+		})
   });
   
 

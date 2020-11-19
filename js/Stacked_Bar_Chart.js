@@ -32,10 +32,12 @@ function stacked_bar_chart() {
 	});
 	*/
 	
+	let dispatcher;
+	
 	
 	function returned(data) {
 		
-	  let dispatcher = d3.dispatch("selectionUpdated");
+	  //let dispatcher = d3.dispatch("selectionUpdated");
 		
 	  console.log("returned begins");
 	  
@@ -152,6 +154,7 @@ function stacked_bar_chart() {
 			.data(stackedData)
 			.enter().append("g")
 			  .attr("fill", function(d) { return color(d.key); })
+			  .attr("class", function(d) { return color(d.key); })
 			  .selectAll("rect")
 			  .data(function(d) { return d; })
 			  .enter().append("rect")
@@ -160,6 +163,7 @@ function stacked_bar_chart() {
 				.attr("height", function(d) { return y1(d[0]) - y1(d[1]); })
 				.attr("width",40)
 				.style("stroke", "black")
+				.attr("class", classify)
 				.on("mouseover", highlight)
 				// deselect dots and color black upon mouseou)t
 				.on("mouseout", function (d) {
@@ -168,23 +172,62 @@ function stacked_bar_chart() {
 				});
 				
 		  function highlight(d) {
-			  
-			console.log("bar highlighted");
 
 			d3.select(this).classed("selected", true)
 			
 			data1 = d3.select(this).data()[0];
-			dispatcher.call("selectionUpdated", this, data1);
+			
+			let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+			dispatcher.call(dispatchString, this, data1);
+			console.log("bar highlighted");
+			console.log(dispatchString);
+			
 			
 			//dispatcher.call(d
 
 		  }
+		  
+		  function classify(d) {
+			  console.log("classify");
+			  console.log(d);
+
+
+			  return d.data.ageBar + d.data.reImageTimeBar2 + d.data.cutTypeBar + d.data.geneticsBar
+		  }
+		  
+		  
+		  
+		  
 
 		}
 	  
 	  
 	  return returned;
 		
+	}
+	
+	// Gets or sets the dispatcher we use for selection events
+	returned.selectionDispatcher = function (_) {
+		console.log("s dipatcher bar");
+		if (!arguments.length) return dispatcher;
+		dispatcher = _;
+		return returned;
+	};
+	
+	returned.highlightBar = function(data) {
+		
+	}
+	
+	returned.highlightBar = function(x) {
+			
+			name = x.age + x.reImageTime + x.cutType + x.genetics
+			console.log("name here:");
+			console.log(name);
+			
+			d3.selectAll(document.getElementsByClassName(name)).classed("selected", true);
+			
+			//d3.select(name).classed("selected", true);
+		return returned;
 	}
 	
 	

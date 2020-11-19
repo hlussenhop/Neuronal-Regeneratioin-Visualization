@@ -2,7 +2,8 @@
 
 function dot_plot_chart() {
 	
-  console.log("start dot plot chart");
+  
+  let dispatcher;
   
 
 /*
@@ -40,20 +41,18 @@ function dot_plot_chart() {
   
   function returned(data) {
 	  
-	  console.log("started returned");
-	  console.log(data)
-	  
 	  
 	  
 	  //let parseDate = d3.timeParse("%m/%d/%Y");
   
-	  let dispatcher = d3.dispatch("selectionUpdated");
 	  
-	  dispatcher.on("selectionUpdated", function(arg1) {
+	  
+	  /*
+	  dispatcher.on("selectionUpdated.test", function(arg1) {
 		  console.log("hello dispatch");
 		  console.log(arg1);
 		  //	console.log(arg2);
-	  })
+	  })*/
 
 	  let margin = { top: 10, right: 30, bottom: 30, left: 100 },
 		width = 650 - margin.left - margin.right,
@@ -114,20 +113,32 @@ function dot_plot_chart() {
 				return d.compositeCategory;
 			  })
 			  // select dots and color them on mouseover
-			  .on("mouseover", function (d) {
-				selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
-				console.log(selected)
-				selected.attr("class", function (d) {
-				  return d.compositeCategory + " regen" + d.regenType;
-				}).attr("r",4);
-				//console.log(d3.select(this).attr("class"));
-			  })
+			  .on("mouseover", highlight)
 			  // deselect dots and color black upon mouseout
 			  .on("mouseout", function (d) {
 				selected.attr("class", function (d) {
 				  return d.compositeCategory;
 				}).attr("r",3);
 			  });
+			  
+			  
+			function highlight(d) {
+				selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
+				//console.log(selected)
+				selected.attr("class", function (d) {
+				  return d.compositeCategory + " regen" + d.regenType;
+				}).attr("r",4);
+				//console.log(d3.select(this).attr("class"));
+				
+				d3.select(this).classed("selected", true);
+				
+				
+				
+				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+				console.log(dispatchString);
+			
+			    dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());
+			}
 
 			//Add vertical bars to the dot plot
 			//A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
@@ -275,6 +286,14 @@ function dot_plot_chart() {
   }
 
   //construct a dot plot
+  
+  // Gets or sets the dispatcher we use for selection events
+  returned.selectionDispatcher = function (_) {
+	console.log("selection dispatcher dot");
+    if (!arguments.length) return dispatcher;
+    dispatcher = _;
+    return returned;
+  };
   
   
   return returned;
