@@ -119,7 +119,7 @@ function legend() {
 	svg_stack_bar.append("text")
 	  .attr("x", (legend_x + y_incr + x_incr))
 	  .attr("y", (legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr))
-	  .text("Not to Ring")
+	  .text("Full Length Regeneration")
 	  .style("font-size", "10px")
 	  .attr("alignment-baseline","middle")
 	  
