@@ -115,11 +115,17 @@ function dot_plot_chart() {
 			  // select dots and color them on mouseover
 			  .on("mouseover", highlight)
 			  // deselect dots and color black upon mouseout
-			  .on("mouseout", function (d) {
+			  .on("mouseout", deselect);
+			  
+			function deselect(d) {
+				let dispatchString2 = Object.getOwnPropertyNames(dispatcher._)[1];
+				dispatcher.call(dispatchString2, this, svg.selectAll('.selected').data());
+				
 				selected.attr("class", function (d) {
 				  return d.compositeCategory;
 				}).attr("r",3);
-			  });
+
+			}
 			  
 			  
 			function highlight(d) {

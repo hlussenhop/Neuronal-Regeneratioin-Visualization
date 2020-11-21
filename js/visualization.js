@@ -41,30 +41,39 @@
   ).then(function(d) {
 	  	
 		let dotPlot = dot_plot_chart()
-			.selectionDispatcher(d3.dispatch("updateSelection"))
+			.selectionDispatcher(d3.dispatch("updateSelection", "end"))
 		    (d);
 	  
 		let stacked1 = stacked_bar_chart()
-			.selectionDispatcher(d3.dispatch("updateSelection"))
+			.selectionDispatcher(d3.dispatch("updateSelection", "end"))
 		    (d);
 		
 			
 		
-		dotPlot.selectionDispatcher().on("updateSelection.test2", function(x) {
-			console.log("hello dispatch good");
-			console.log(x[0]);
+		dotPlot.selectionDispatcher()
+			.on("updateSelection.test2", function(x) {
+				console.log("hello dispatch good");
+				console.log(x[0]);
+				
+				stacked1.highlightBar(x[0]);
+			})
 			
-			stacked1.highlightBar(x[0]);
-		})
+		dotPlot.selectionDispatcher()
+			.on("end.test3", function(x) {
+				console.log("deselected");
+				console.log(x[0]);
+				stacked1.deselectBar(x[0]);
+			})
 	
 	
-		stacked1.selectionDispatcher().on("updateSelection.test", function(x) {
-			console.log("stacked receives dispatch");
+		stacked1.selectionDispatcher()
+			.on("updateSelection.test", function(x) {
+				console.log("stacked receives dispatch");
 		
 			
 			
 			//stacked1.highlightBar(x);
-		})
+				})
   });
   
 

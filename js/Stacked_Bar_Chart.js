@@ -153,8 +153,8 @@ function stacked_bar_chart() {
 			.selectAll("g")
 			.data(stackedData)
 			.enter().append("g")
-			  .attr("fill", function(d) { return color(d.key); })
-			  .attr("class", function(d) { return color(d.key); })
+			  .attr("fill", barColor)
+			  .attr("class", barColor)
 			  .selectAll("rect")
 			  .data(function(d) { return d; })
 			  .enter().append("rect")
@@ -170,6 +170,8 @@ function stacked_bar_chart() {
 				  d3.select(this).classed("selected", false) 
 					
 				});
+		
+		  fillColor;
 				
 		  function highlight(d) {
 
@@ -187,12 +189,18 @@ function stacked_bar_chart() {
 
 		  }
 		  
+		  function barColor(d)  {
+			  fillColor = color(d.key);
+			  return color(d.key);
+		  }
+		  
 		  function classify(d) {
 			  console.log("classify");
 			  console.log(d);
+			  //currentClass = d3.select(d).class;
 
 
-			  return d.data.ageBar + d.data.reImageTimeBar2 + d.data.cutTypeBar + d.data.geneticsBar
+			  return  d.data.ageBar + d.data.reImageTimeBar2 + d.data.cutTypeBar + d.data.geneticsBar
 		  }
 		  
 		  
@@ -224,10 +232,28 @@ function stacked_bar_chart() {
 			console.log("name here:");
 			console.log(name);
 			
-			d3.selectAll(document.getElementsByClassName(name)).classed("selected", true);
+			console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
 			
-			//d3.select(name).classed("selected", true);
+			rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType];
+			
+			rect1.className.baseVal = " selected";
+
 		return returned;
+	}
+	
+	returned.deselectBar = function(x) {
+		name = x.age + x.reImageTime + x.cutType + x.genetics
+			console.log("name here:");
+			console.log(name);
+			
+			console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
+			
+			rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType];
+			
+			rect1.className.baseVal = "";
+
+		return returned;
+		
 	}
 	
 	
