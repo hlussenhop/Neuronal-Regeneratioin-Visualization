@@ -115,9 +115,9 @@ function dot_plot_chart() {
 					return d.compositeCategory + ' deselected';
 				})
 				// select dots and color them on mouseover
-				.on("mouseover", highlightDot)
+				//.on("mouseover", highlightDot)
 				// deselect dots and color black upon mouseout
-				.on("mouseout", deselect);
+				//.on("mouseout", deselect);
 
 			function deselect(d) {
 				let dispatchString2 = Object.getOwnPropertyNames(dispatcher._)[1];
@@ -177,7 +177,6 @@ function dot_plot_chart() {
 					] = event.selection;
 
 
-					//console.log(x0)
 					points.classed('deselected', function (d) {
 						return !(x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)
 					})
@@ -193,11 +192,21 @@ function dot_plot_chart() {
 							d3.select(this).classed("regen4", false)
 							d3.select(this).classed("regen5", false)
 						}
-						
+
+						return (x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)
 					});
 
 					// do dispatch stuff
+					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
+					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[2];
+					console.log(d3.selectAll(svg.selectAll('.selected')).data())
 
+					dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());	
+
+					dispatchString = Object.getOwnPropertyNames(dispatcher._)[3];
+					console.log(d3.selectAll(svg.selectAll('.selected')).data())
+
+					dispatcher.call(dispatchString, this, svg.selectAll('.deselected').data());	
 
 				}
 

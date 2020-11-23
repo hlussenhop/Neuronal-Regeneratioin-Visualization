@@ -41,19 +41,19 @@
   ).then(function(d) {
 	  	
 		let dotPlot = dot_plot_chart()
-			.selectionDispatcher(d3.dispatch("updateSelection", "end"))
+			.selectionDispatcher(d3.dispatch("updateSelection", "end", "updateBrush", "deselectBrush"))
 		    (d);
 	  
 		let stacked1 = stacked_bar_chart()
-			.selectionDispatcher(d3.dispatch("updateSelection", "end"))
+			.selectionDispatcher(d3.dispatch("updateSelection", "end", "updateBrush", "deselectBrush"))
 		    (d);
 		
 			
 		
 		dotPlot.selectionDispatcher()
 			.on("updateSelection.test2", function(x) {
-				console.log("hello dispatch good");
-				console.log(x[0]);
+				//console.log("hello dispatch good");
+				//console.log(x[0]);
 				
 				stacked1.highlightBar(x[0]);
 			})
@@ -64,6 +64,25 @@
 				console.log(x[0]);
 				stacked1.deselectBar(x[0]);
 			})
+
+		dotPlot.selectionDispatcher()
+			.on("updateBrush", function(x){
+				//console.log(x)
+				for(let i = 0; i <x.length; i++){
+					//console.log(x[i])
+					stacked1.highlightBar(x[i]);
+				}
+			})
+
+			dotPlot.selectionDispatcher()
+			.on("deselectBrush", function(x){
+				//console.log(x)
+				for(let i = 0; i <x.length; i++){
+					//console.log(x[i])
+					stacked1.deselectBar(x[i]);
+				}
+			})
+		
 	
 	
 		stacked1.selectionDispatcher()

@@ -83,13 +83,11 @@ h1, h2, h3 {
 }
 
 circle.selected {
-	fill: pink;
 
   }
   
 .selected {
-	fill: pink;
-	opacity: 1;
+	opacity: 0.5;
 }
 
 .deselected{

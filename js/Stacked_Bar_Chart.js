@@ -131,8 +131,7 @@ function stacked_bar_chart() {
 		  let stackedData = d3.stack()
 			.keys(subgroups)
 			(data)
-		  
-		  //console.log(stackedData);
+	
 
 		  // define the scope of the x axis
 		  let x = d3
@@ -156,9 +155,13 @@ function stacked_bar_chart() {
 			  .attr("fill", barColor)
 			  .attr("class", barColor)
 			  .selectAll("rect")
-			  .data(function(d) { return d; })
+			  .data(function(d) { 
+				console.log("d: "+ d)  
+				return d; })
 			  .enter().append("rect")
-				.attr("x", function(d) { return x1(d.data.col_name); })
+				.attr("x", function(d) { 
+					console.log(d)
+					return x1(d.data.col_name); })
 				.attr("y", function(d) { return y1(d[1]); })
 				.attr("height", function(d) { return y1(d[0]) - y1(d[1]); })
 				.attr("width",40)
@@ -181,8 +184,8 @@ function stacked_bar_chart() {
 			
 			let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 			dispatcher.call(dispatchString, this, data1);
-			console.log("bar highlighted");
-			console.log(dispatchString);
+			//console.log("bar highlighted");
+			//console.log(dispatchString);
 			
 			
 			//dispatcher.call(d
@@ -190,12 +193,13 @@ function stacked_bar_chart() {
 		  }
 		  
 		  function barColor(d)  {
+			  console.log("d.key: " + d.key)
 			  fillColor = color(d.key);
 			  return color(d.key);
 		  }
 		  
 		  function classify(d) {
-			  console.log("classify");
+			  //console.log("classify");
 			  console.log(d);
 			  //currentClass = d3.select(d).class;
 
@@ -229,19 +233,53 @@ function stacked_bar_chart() {
 	returned.highlightBar = function(x) {
 			
 			name = x.age + x.reImageTime + x.cutType + x.genetics
-			console.log("name here:");
-			console.log(name);
+			//console.log(name)
+			//console.log("name here:");
+			//console.log("name: "+  name);
+			console.log(d3.selectAll(document.getElementsByClassName(name)))
+			//console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
+			//console.log(d3.selectAll(document.getElementsByClassName(name)))
+			//console.log(d3.selectAll(document.getElementsByClassName(name)))
+			/*d3.selectAll(document.getElementsByClassName(name)).classed("selected",function(d){
+				//console.log(d)
+				percent  = d[1] - d[0]
+				
+				if(percent == d.data.none){
+					regenTypeBar = 0
+				} else if(percent == d.data.not_to_ring){
+					regenTypeBar = 1
+				} else if(percent == d.data.to_ring){
+					regenTypeBar = 2
+				} else if(percent == d.data.along_ring){
+					regenTypeBar = 3
+				} else if(percent == d.data.full_length){
+					regenTypeBar = 4
+				}
+
+				//console.log(percent)
+				if(regenTypeBar == x.regenType){
+					
+					return true
+				} else{
+					return false
+				}
+				
+			})
+			*/
+			d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected",true)
+			//rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]
 			
-			console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
-			
-			rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType];
-			
-			rect1.className.baseVal = " selected";
+			//rect1.classed("selected",true);;
 
 		return returned;
 	}
 	
 	returned.deselectBar = function(x) {
+
+		name = x.age + x.reImageTime + x.cutType + x.genetics
+		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected",false)
+		/*
+		console.log("work")
 		name = x.age + x.reImageTime + x.cutType + x.genetics
 			console.log("name here:");
 			console.log(name);
@@ -251,6 +289,7 @@ function stacked_bar_chart() {
 			rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType];
 			
 			rect1.className.baseVal = "";
+			*/
 
 		return returned;
 		
