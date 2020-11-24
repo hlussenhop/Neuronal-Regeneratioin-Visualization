@@ -6,10 +6,7 @@
 
 	let parseDate = d3.timeParse("%m/%d/%Y");
 
-	//console.log('Hello, world!');
-
 	d3.csv("data/dot_plot_merge_stacked_bar.csv", function (data) {
-
 
 		return {
 
@@ -52,9 +49,6 @@
 
 		dotPlot.selectionDispatcher()
 			.on("updateSelection.test2", function (x) {
-				//console.log("hello dispatch good");
-				//console.log(x[0]);
-
 				stacked1.highlightBar(x[0]);
 			})
 
@@ -67,18 +61,14 @@
 
 		dotPlot.selectionDispatcher()
 			.on("updateBrush", function (x) {
-				//console.log(x)
 				for (let i = 0; i < x.length; i++) {
-					//console.log(x[i])
 					stacked1.highlightBar(x[i]);
 				}
 			})
 
 		dotPlot.selectionDispatcher()
 			.on("deselectBrush", function (x) {
-				//console.log(x)
 				for (let i = 0; i < x.length; i++) {
-					//console.log(x[i])
 					stacked1.deselectBar(x[i]);
 				}
 			})
@@ -87,10 +77,6 @@
 
 		stacked1.selectionDispatcher()
 			.on("updateSelection.test", function (x) {
-				//console.log("stacked receives dispatch");
-				//console.log(d3.select(this.parentNode).datum().key)
-
-
 				dotPlot.highlightDot(x, d3.select(this.parentNode).datum().key);
 			})
 

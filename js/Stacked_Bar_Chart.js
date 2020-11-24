@@ -1,40 +1,7 @@
 // stacked bar chart function
-
-//var dispatcher = d3.dispatch("selectionUpdated");
-
 function stacked_bar_chart() {
 
-	// margins
-
-
-	// reading csv file
-
-	/*
-	d3.csv("data/dot_plot_merge_stacked_bar.csv", function (data) {
-	  return {
-		
-		reImageTimeBar: data.re_image_time_class,
-
-		col_name: data.col_name,
-		none: data.none,
-		not_to_ring: data.not_to_ring,
-		to_ring: data.to_ring,
-		along_ring: data.along_ring,
-		full_length: data.full_length
-		
-		
-	  };
-	  // call the chart function 3 times
-	}).then(function (d) {
-	  chart(d, "12hr", 1);
-	  chart(d, "24hr", 2);
-	  chart(d, "24hr_YA", 3);
-	});
-	*/
-
 	let dispatcher;
-
-
 	function returned(data) {
 
 		//let dispatcher = d3.dispatch("selectionUpdated");
@@ -72,11 +39,6 @@ function stacked_bar_chart() {
 
 		//construct a stacked bar chart
 		function chart(data, age, step) {
-
-			//console.log("chart called");
-			//console.log(data);
-			//console.log("data here:");
-			//console.log(data);
 
 			// filter the data
 			data = data.filter(divideByReimage(age));
@@ -170,137 +132,76 @@ function stacked_bar_chart() {
 				.style("stroke", "black")
 				.attr("class", classify)
 				.on("mouseover", highlight)
-				// deselect dots and color black upon mouseou)t
+				// deselect bars and delete text
 				.on("mouseout", function (d) {
 					d3.select(this).classed("selected", false)
+					d3.selectAll(document.getElementsByClassName("pct_text")).remove()
 					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[4];
 					dispatcher.call(dispatchString, this, data1);
 				});
 
 			fillColor;
 
+			//Highlight a bar and add text upon mouseover
 			function highlight(d) {
-
 				d3.select(this).classed("selected", true)
+				y1 = d3.select(this).data()[0][0]
+				y2 = d3.select(this).data()[0][1]
+				percent = ((y2 - y1) * 100).toFixed(0)
+				console.log(percent)
+
+				svg.append("text")
+					.attr("x", parseInt(d3.select(this).attr("x"), 10) + 5)
+					.attr("y", parseInt(d3.select(this).attr("y"), 10) + (parseInt(d3.select(this).attr("height"), 10) / 2))
+					.style("font-size", "15px")
+					.attr("class", "pct_text")
+					.text(percent + "%")
 
 				data1 = d3.select(this).data()[0];
-				console.log(d3.select(this).data())
+
 				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 				dispatcher.call(dispatchString, this, data1);
-				//console.log("bar highlighted");
-				//console.log(dispatchString);
-
-
-				//dispatcher.call(d
-
 			}
 
+			//Select the color of the bar
 			function barColor(d) {
-				//console.log("d.key: " + d.key)
 				fillColor = color(d.key);
 				return color(d.key);
 			}
 
+			//Get the class of the bar
 			function classify(d) {
-				//console.log("classify");
-				//console.log(d);
-				//currentClass = d3.select(d).class;
-
-
 				return d.data.ageBar + d.data.reImageTimeBar2 + d.data.cutTypeBar + d.data.geneticsBar
 			}
-
-
-
-
-
 		}
 
-
 		return returned;
-
 	}
 
 	// Gets or sets the dispatcher we use for selection events
 	returned.selectionDispatcher = function (_) {
-		//console.log("s dipatcher bar");
 		if (!arguments.length) return dispatcher;
 		dispatcher = _;
 		return returned;
 	};
 
-	returned.highlightBar = function (data) {
 
-	}
-
+	//Highligt bars when dots are brushed over
 	returned.highlightBar = function (x) {
-
 		name = x.age + x.reImageTime + x.cutType + x.genetics
-		//console.log(name)
-		//console.log("name here:");
-		//console.log("name: "+  name);
-		//console.log(d3.selectAll(document.getElementsByClassName(name)))
-		//console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
-		//console.log(d3.selectAll(document.getElementsByClassName(name)))
-		//console.log(d3.selectAll(document.getElementsByClassName(name)))
-		/*d3.selectAll(document.getElementsByClassName(name)).classed("selected",function(d){
-			//console.log(d)
-			percent  = d[1] - d[0]
-			
-			if(percent == d.data.none){
-				regenTypeBar = 0
-			} else if(percent == d.data.not_to_ring){
-				regenTypeBar = 1
-			} else if(percent == d.data.to_ring){
-				regenTypeBar = 2
-			} else if(percent == d.data.along_ring){
-				regenTypeBar = 3
-			} else if(percent == d.data.full_length){
-				regenTypeBar = 4
-			}
 
-			//console.log(percent)
-			if(regenTypeBar == x.regenType){
-				
-				return true
-			} else{
-				return false
-			}
-			
-		})
-		*/
 		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected", true)
-		//rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]
-
-		//rect1.classed("selected",true);;
-
 		return returned;
 	}
 
+	//Deselect bars when dots are deselected with brushing
 	returned.deselectBar = function (x) {
-
 		name = x.age + x.reImageTime + x.cutType + x.genetics
 		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected", false)
-		/*
-		console.log("work")
-		name = x.age + x.reImageTime + x.cutType + x.genetics
-			console.log("name here:");
-			console.log(name);
-			
-			console.log(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType].className);
-			
-			rect1 = d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType];
-			
-			rect1.className.baseVal = "";
-			*/
-
 		return returned;
 
 	}
-
-
 
 	return returned;
 }
-// call the function we created
-  //stacked_bar_chart();
+

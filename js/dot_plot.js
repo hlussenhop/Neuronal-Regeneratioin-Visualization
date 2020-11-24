@@ -41,19 +41,6 @@ function dot_plot_chart() {
 
 	function returned(data) {
 
-
-
-		//let parseDate = d3.timeParse("%m/%d/%Y");
-
-
-
-		/*
-		dispatcher.on("selectionUpdated.test", function(arg1) {
-			console.log("hello dispatch");
-			console.log(arg1);
-			//	console.log(arg2);
-		})*/
-
 		let margin = { top: 10, right: 30, bottom: 30, left: 100 },
 			width = 650 - margin.left - margin.right,
 			height = 510 - margin.top - margin.bottom;
@@ -70,6 +57,7 @@ function dot_plot_chart() {
 
 
 		function dotPlot(data, age, step) {
+	
 			// modify datasets so they can be used with the dot plot
 			data = fixData(data, age);
 			//avgData = fixData(avgData, age);
@@ -94,6 +82,8 @@ function dot_plot_chart() {
 
 
 			let selected
+
+			
 			// add dots to the dot-plot
 			svg
 				.selectAll(".bar")
@@ -101,8 +91,8 @@ function dot_plot_chart() {
 				.enter()
 				.append("circle")
 				.attr("r", 3)
-
 				.attr("cx", function (d) {
+				
 					direction =
 						(Math.round(Math.random()) * 2 - 1) *
 						(6 * Math.floor(Math.random() * 3));
@@ -112,41 +102,9 @@ function dot_plot_chart() {
 					return y(d.length);
 				})
 				.attr("class", function (d) {
+				
 					return d.compositeCategory + ' deselected';
 				})
-			// select dots and color them on mouseover
-			//.on("mouseover", highlightDot)
-			// deselect dots and color black upon mouseout
-			//.on("mouseout", deselect);
-
-			function deselect(d) {
-				let dispatchString2 = Object.getOwnPropertyNames(dispatcher._)[1];
-				dispatcher.call(dispatchString2, this, svg.selectAll('.selected').data());
-
-				selected.attr("class", function (d) {
-					return d.compositeCategory;
-				}).attr("r", 3);
-
-			}
-
-
-			function highlightDot(d) {
-				selected = d3.selectAll(document.getElementsByClassName(d3.select(this).attr("class")))
-				console.log("we")
-				selected.attr("class", function (d) {
-					return d.compositeCategory + " regen" + d.regenType;
-				}).attr("r", 4);
-				//console.log(d3.select(this).attr("class"));
-
-				d3.select(this).classed("selected", true);
-
-
-
-				let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
-				console.log(dispatchString);
-
-				dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());
-			}
 
 			let points = d3.selectAll("circle")
 
@@ -154,6 +112,7 @@ function dot_plot_chart() {
 
 			svg.call(brush)
 
+			//function that facilitates brushing
 			function brush(g) {
 
 				const brush = d3.brush()
@@ -168,7 +127,7 @@ function dot_plot_chart() {
 
 				g.call(brush)
 
-
+				//highlight or deselect dots when brushing occurs
 				function highlight(event, d) {
 					if (event.selection === null) return;
 					const [
@@ -176,21 +135,22 @@ function dot_plot_chart() {
 						[x1, y1]
 					] = event.selection;
 
-
+					
 					points.classed('deselected', function (d) {
 						return !(x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)
 					})
+					
 
 					points.classed('selected', function (d) {
 						if (x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1) {
 							d3.select(this).classed(d.compositeCategory + " regen" + d.regenType, true)
 
 						} else if (!(x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)) {
+							d3.select(this).classed("regen0", false)
 							d3.select(this).classed("regen1", false)
 							d3.select(this).classed("regen2", false)
 							d3.select(this).classed("regen3", false)
 							d3.select(this).classed("regen4", false)
-							d3.select(this).classed("regen5", false)
 						}
 
 						return (x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)
@@ -217,8 +177,6 @@ function dot_plot_chart() {
 				}
 
 			}
-
-
 
 			//Add vertical bars to the dot plot
 			//A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
@@ -264,6 +222,7 @@ function dot_plot_chart() {
 			  .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 	
 			*/
+
 			// add the text/labels in the
 			svg
 				.append("text")
@@ -301,9 +260,11 @@ function dot_plot_chart() {
 				.text("Length Regenerated (um)");
 
 			fixCircles();
+
+			
 		}
 
-		// adds a 'category' column to the data which is used to match the data to its categorical data channel
+		// Adds a 'category' column to the data which is used to match the data to its categorical data channel
 		// filters data based on the age and reimaging time of the particular datapoint
 		function fixData(data, age) {
 			newData = [];
@@ -348,7 +309,7 @@ function dot_plot_chart() {
 			return newData;
 		}
 
-		// removes and extra circles that are plotted wrong
+		// Removes and extra circles that are plotted wrong
 		function fixCircles() {
 			arr = Array.from(document.getElementsByTagName("circle"));
 
@@ -369,6 +330,7 @@ function dot_plot_chart() {
 		return returned;
 	}
 
+	//Highlight dots when bars are moused over
 	returned.highlightDot = function (x, r) {
 		genetics = x.data.geneticsBar;
 		if (x.data.geneticsBar == "wild-type") {
@@ -411,7 +373,7 @@ function dot_plot_chart() {
 		d3.selectAll("circle").classed("regen2", false)
 		d3.selectAll("circle").classed("regen3", false)
 		d3.selectAll("circle").classed("regen4", false)
-
+		d3.selectAll("circle").classed("deselected", true)
 		return returned
 	}
 
