@@ -114,10 +114,10 @@ function dot_plot_chart() {
 				.attr("class", function (d) {
 					return d.compositeCategory + ' deselected';
 				})
-				// select dots and color them on mouseover
-				//.on("mouseover", highlightDot)
-				// deselect dots and color black upon mouseout
-				//.on("mouseout", deselect);
+			// select dots and color them on mouseover
+			//.on("mouseover", highlightDot)
+			// deselect dots and color black upon mouseout
+			//.on("mouseout", deselect);
 
 			function deselect(d) {
 				let dispatchString2 = Object.getOwnPropertyNames(dispatcher._)[1];
@@ -183,9 +183,9 @@ function dot_plot_chart() {
 
 					points.classed('selected', function (d) {
 						if (x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1) {
-							d3.select(this).classed(d.compositeCategory + " regen" + d.regenType, true) 
-							
-						}else if (!(x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)){
+							d3.select(this).classed(d.compositeCategory + " regen" + d.regenType, true)
+
+						} else if (!(x0 <= d3.select(this).attr('cx') && d3.select(this).attr('cx') <= x1 && y0 <= d3.select(this).attr('cy') && d3.select(this).attr('cy') <= y1)) {
 							d3.select(this).classed("regen1", false)
 							d3.select(this).classed("regen2", false)
 							d3.select(this).classed("regen3", false)
@@ -199,14 +199,14 @@ function dot_plot_chart() {
 					// do dispatch stuff
 					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
 					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[2];
-					console.log(d3.selectAll(svg.selectAll('.selected')).data())
+					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
 
-					dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());	
+					dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());
 
 					dispatchString = Object.getOwnPropertyNames(dispatcher._)[3];
-					console.log(d3.selectAll(svg.selectAll('.selected')).data())
+					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
 
-					dispatcher.call(dispatchString, this, svg.selectAll('.deselected').data());	
+					dispatcher.call(dispatchString, this, svg.selectAll('.deselected').data());
 
 				}
 
@@ -329,7 +329,7 @@ function dot_plot_chart() {
 					d["compositeCategory"] = d.category.replace(/\s/g, '') + "" + d.age + d.reImageTime;
 
 					if (age == "L2 cut, 12 h reimage") {
-						console.log("g");
+						//console.log("g");
 						if (d.age == "L2" && d.reImageTime == "12hr") {
 							newData.push(d);
 						}
@@ -369,11 +369,57 @@ function dot_plot_chart() {
 		return returned;
 	}
 
+	returned.highlightDot = function (x, r) {
+		genetics = x.data.geneticsBar;
+		if (x.data.geneticsBar == "wild-type") {
+			genetics = "wt";
+		}
+		console.log(x.data)
+		compositeCategoryBar = genetics + x.data.cutTypeBar + x.data.ageBar + x.data.reImageTimeBar2
+		console.log(compositeCategoryBar)
+
+
+		switch (r) {
+			case "none":
+				regen = 0
+				break;
+			case "not_to_ring":
+				regen = 1;
+				break;
+			case "to_ring":
+				regen = 2;
+				break;
+			case "along_ring":
+				regen = 3;
+				break;
+			case "full_length":
+				regen = 4;
+		}
+
+		d3.selectAll(document.getElementsByClassName(compositeCategoryBar)).classed("regen" + regen, function (d) {
+			return (d.regenType == regen)
+		})
+
+		return returned
+	}
+
+	returned.deselectDot = function (x) {
+
+		console.log("working")
+		d3.selectAll("circle").classed("regen0", false)
+		d3.selectAll("circle").classed("regen1", false)
+		d3.selectAll("circle").classed("regen2", false)
+		d3.selectAll("circle").classed("regen3", false)
+		d3.selectAll("circle").classed("regen4", false)
+
+		return returned
+	}
+
 	//construct a dot plot
 
 	// Gets or sets the dispatcher we use for selection events
 	returned.selectionDispatcher = function (_) {
-		console.log("selection dispatcher dot");
+		//console.log("selection dispatcher dot");
 		if (!arguments.length) return dispatcher;
 		dispatcher = _;
 		return returned;
