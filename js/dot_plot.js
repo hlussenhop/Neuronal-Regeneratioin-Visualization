@@ -42,7 +42,7 @@ function dot_plot_chart() {
 	function returned(data) {
 
 		let margin = { top: 10, right: 30, bottom: 30, left: 100 },
-			width = 650 - margin.left - margin.right,
+			width = 690 - margin.left - margin.right,
 			height = 510 - margin.top - margin.bottom;
 
 		let ourBrush = null;
@@ -246,7 +246,7 @@ function dot_plot_chart() {
 
 			svg
 				.append("text")
-				.attr("x", 370)
+				.attr("x", 360)
 				.attr("y", 50)
 				.attr("class", "chartText")
 				.text("Young Adult cut, 24 reimage");
