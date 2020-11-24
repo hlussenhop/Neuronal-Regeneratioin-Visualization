@@ -139,7 +139,15 @@ function stacked_bar_chart() {
 			.rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
 			.padding(0.1)
 			.domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
-		  
+
+		// tooltip
+		d3.select('body')
+			.append('div')
+			.attr('id', 'tooltip')
+			.attr('style', 'position: absolute; opacity: 0;');
+		
+		
+
 		  // add the x axis to the svg
 		  svg
 			.append("g")
@@ -167,12 +175,27 @@ function stacked_bar_chart() {
 				.attr("width",40)
 				.style("stroke", "black")
 				.attr("class", classify)
+				.on('mouseover', function(d) {
+					d3.select('#tooltip').transition().duration(200).style('opacity', 1).text("hello")
+				})
+				.on('mouseout', function(d) {
+					d3.select('#tooltip').style('opacity', 0)
+				})
+				//.on('mousemove', function(d) {
+					//d3.select('#tooltip')
+					//	.style('left', (d3.event.pageX+10) + 'px')
+					//	.style('top', (d3.event.pageY+10) + 'px')
+			//	})
+
 				.on("mouseover", highlight)
-				// deselect dots and color black upon mouseou)t
+				// deselect dots and color black upon mouseout
 				.on("mouseout", function (d) {
 				  d3.select(this).classed("selected", false) 
+			});
+			
+				
 					
-				});
+	
 		
 		  fillColor;
 				
