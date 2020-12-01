@@ -64,7 +64,7 @@ function stacked_bar_chart() {
 				.attr("transform", "rotate(-90)")
 				.attr("x", -775)
 				.attr("y", -50)
-				.text("Percent Regeneration (%)");
+				.text("Percent Regeneration");
 
 			svg.append("text")
 				.attr("x", 40)
@@ -99,7 +99,7 @@ function stacked_bar_chart() {
 			// define the scope of the x axis
 			let x = d3
 				.scaleBand()
-				.rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
+				.rangeRound([24 + (width / 3) * step - 170, ((width + 10) / 3) * step])
 				.padding(0.1)
 				.domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
 
