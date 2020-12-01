@@ -67,18 +67,21 @@ function dot_plot_chart() {
 				.scaleLinear()
 				.domain([0, 100])
 				.range([height - 20, 70]);
-			svg.append("g").call(d3.axisLeft(y));
+			svg.append("g").call(d3.axisLeft(y))
+				.style("font-size", "12px");
 
 			//construct x axis
 			let x = d3
 				.scaleBand()
 				.rangeRound([16 + (width / 3) * step - 170, (width / 3) * step])
 				.padding(0.1)
-				.domain(["wt axon", "wt a+d", "dlk-1 a+d"]);
+				.domain(["wt axon", "wt a+d", "dlk-1 a+d"])
+				
 			svg
 				.append("g")
 				.attr("transform", "translate(-16," + (height - 20) + ")")
-				.call(d3.axisBottom(x));
+				.call(d3.axisBottom(x))
+				.style("font-size", "12px");
 
 
 			let selected
@@ -255,7 +258,7 @@ function dot_plot_chart() {
 				.append("text")
 				.attr("transform", "rotate(-90)")
 				.attr("x", -350)
-				.attr("y", -30)
+				.attr("y", -50)
 				.attr("class", "chartText")
 				.text("Length Regenerated (um)");
 

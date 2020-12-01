@@ -51,7 +51,8 @@ function stacked_bar_chart() {
 				.range([height - 60, 500]);
 
 			// create y axis to dispay percentage
-			svg.append("g").call(d3.axisLeft(y1).tickFormat(d3.format('~%')));
+			svg.append("g").call(d3.axisLeft(y1).tickFormat(d3.format('~%')))
+				.style("font-size", "12px");
 
 			// chart labels
 			svg.append("text")
@@ -62,8 +63,8 @@ function stacked_bar_chart() {
 			svg.append("text")
 				.attr("transform", "rotate(-90)")
 				.attr("x", -775)
-				.attr("y", -40)
-				.text("Percent Regeneration");
+				.attr("y", -50)
+				.text("Percent Regeneration (%)");
 
 			svg.append("text")
 				.attr("x", 40)
@@ -106,7 +107,8 @@ function stacked_bar_chart() {
 			svg
 				.append("g")
 				.attr("transform", "translate(-16," + (height - 60) + ")")
-				.call(d3.axisBottom(x));
+				.call(d3.axisBottom(x))
+				.style("font-size", "12px");;
 
 			// add bars to the stacked bar chart
 			svg.append("g")
