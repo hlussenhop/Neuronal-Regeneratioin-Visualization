@@ -73,7 +73,7 @@ function dot_plot_chart() {
 			//construct x axis
 			let x = d3
 				.scaleBand()
-				.rangeRound([20 + (width / 3) * step - 170, ((width + 10) / 3) * step])
+				.rangeRound([20 + (width / 3) * step - 170, (width / 3) * step])
 				.padding(0.1)
 				.domain(["wt axon", "wt a+d", "dlk-1 a+d"])
 				
