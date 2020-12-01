@@ -6,7 +6,7 @@
 
 	let parseDate = d3.timeParse("%m/%d/%Y");
 
-	d3.csv("data/dot_plot_merge_stacked_bar.csv", function (data) {
+	d3.csv("data/dot_plot_merge_stacked_bar_mod.csv", function (data) {
 
 		return {
 

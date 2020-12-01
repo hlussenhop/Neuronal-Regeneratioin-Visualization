@@ -108,11 +108,14 @@ function stacked_bar_chart() {
 				.append("g")
 				.attr("transform", "translate(-16," + (height - 60) + ")")
 				.call(d3.axisBottom(x))
-				.style("font-size", "12px");;
+				.style("font-size", "12px")
+				.attr('font-weight', 'bold');
 
 			// add bars to the stacked bar chart
+			
 			svg.append("g")
-			svg.append("g")
+			
+			let bars = svg.append("g")
 				.selectAll("g")
 				.data(stackedData)
 				.enter().append("g")
@@ -136,7 +139,14 @@ function stacked_bar_chart() {
 				.on("mouseover", highlight)
 				// deselect bars and delete text
 				.on("mouseout", function (d) {
-					d3.select(this).classed("selected", false)
+					/*
+					compositeCategoryBar = d.genetics + d.cutTypeBar + d.ageBar + d.reImageTimeBar2
+					let thing1 = compositeCategoryBar;
+					d3.selectAll(document.getElementsByClassName(compositeCategoryBar)).style('opacity', function() {
+					return (this === thing1) ? 1 : 1;
+				})
+				*/
+					d3.select(this).classed("selected_bar", false)
 					d3.selectAll(document.getElementsByClassName("pct_text")).remove()
 					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[4];
 					dispatcher.call(dispatchString, this, data1);
@@ -146,7 +156,14 @@ function stacked_bar_chart() {
 
 			//Highlight a bar and add text upon mouseover
 			function highlight(d) {
-				d3.select(this).classed("selected", true)
+				/*compositeCategoryBar = d.genetics + d.cutTypeBar + d.ageBar + d.reImageTimeBar2
+				let thing = compositeCategoryBar
+				d3.selectAll(document.getElementsByClassName(compositeCategoryBar)).style('opacity', function() {
+					return (this === thing) ? 0.5 : 1;
+					
+				})
+				*/
+				d3.select(this).classed("selected_bar", true)
 				y1 = d3.select(this).data()[0][0]
 				y2 = d3.select(this).data()[0][1]
 				percent = ((y2 - y1) * 100).toFixed(0)
@@ -188,18 +205,28 @@ function stacked_bar_chart() {
 	};
 
 
-	//Highligt bars when dots are brushed over
+	//Highlight bars when dots are brushed over
 	returned.highlightBar = function (x) {
 		name = x.age + x.reImageTime + x.cutType + x.genetics
 
-		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected", true)
+		let thing = this
+
+		d3.selectAll(document.getElementsByClassName(name))
+			.style('opacity', 1);
+			
+
+		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected_bar", true)
 		return returned;
 	}
 
 	//Deselect bars when dots are deselected with brushing
 	returned.deselectBar = function (x) {
 		name = x.age + x.reImageTime + x.cutType + x.genetics
-		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected", false)
+		let thing1 = d3.select(d3.selectAll(document.getElementsByClassName(name)))
+		d3.selectAll(document.getElementsByClassName(name)).style('opacity', function() {
+			return (this === thing1) ? 0.5 : 1;
+			})
+		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected_bar", false)
 		return returned;
 
 	}

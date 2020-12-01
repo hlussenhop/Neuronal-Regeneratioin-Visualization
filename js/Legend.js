@@ -31,7 +31,8 @@ function legend() {
 	  .attr("width",legend_width)
 	  .attr("height", legend_height)
 	  .style("fill", "white")
-	  .style("stroke", 'black');
+	  .style("stroke", 'black')
+	  .style("stroke-width", "5px");
 
 	// legend title
 	svg_stack_bar.append("text")

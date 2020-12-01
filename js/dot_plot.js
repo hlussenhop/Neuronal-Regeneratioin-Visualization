@@ -81,8 +81,8 @@ function dot_plot_chart() {
 				.append("g")
 				.attr("transform", "translate(-16," + (height - 20) + ")")
 				.call(d3.axisBottom(x))
-				.style("font-size", "12px");
-
+				.style("font-size", "12px")
+				.attr('font-weight', 'bold');
 
 			let selected
 
@@ -93,7 +93,7 @@ function dot_plot_chart() {
 				.data(data)
 				.enter()
 				.append("circle")
-				.attr("r", 3)
+				.attr("r", 3.5)
 				.attr("cx", function (d) {
 				
 					direction =
@@ -160,14 +160,10 @@ function dot_plot_chart() {
 					});
 
 					// do dispatch stuff
-					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
+					
 					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[2];
-					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
-
 					dispatcher.call(dispatchString, this, svg.selectAll('.selected').data());
-
 					dispatchString = Object.getOwnPropertyNames(dispatcher._)[3];
-					//console.log(d3.selectAll(svg.selectAll('.selected')).data())
 
 					dispatcher.call(dispatchString, this, svg.selectAll('.deselected').data());
 
@@ -293,7 +289,6 @@ function dot_plot_chart() {
 					d["compositeCategory"] = d.category.replace(/\s/g, '') + "" + d.age + d.reImageTime;
 
 					if (age == "L2 cut, 12 h reimage") {
-						//console.log("g");
 						if (d.age == "L2" && d.reImageTime == "12hr") {
 							newData.push(d);
 						}
