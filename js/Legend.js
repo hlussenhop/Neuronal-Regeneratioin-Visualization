@@ -38,9 +38,10 @@ function legend() {
 	  .attr("x", ((legend_x + (legend_width)/2)))
 	  .attr("y", (legend_y + x_incr))
 	  .text("Regeneration Type")
-	  .style("font-size", "10px")
+	  .style("font-size", "12px")
 	  .style('text-anchor', 'middle')
 	  .attr('text-decoration', 'underline')
+	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
 
 	// legend: none regeneration SHAPE
@@ -57,6 +58,7 @@ function legend() {
 	  .attr("y", (legend_y + (2*y_incr)))
 	  .text("None")
 	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
 
 	// legend: not to ring regeneration SHAPE
@@ -73,6 +75,7 @@ function legend() {
 	  .attr("y", (legend_y + (2*y_incr) + y_incr))
 	  .text("Not to Ring")
 	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
 
 	// legend: to ring regeneration SHAPE
@@ -89,6 +92,7 @@ function legend() {
 	.attr("y", (legend_y + (2*y_incr) + y_incr + y_incr))
 	.text("To Ring")
 	.style("font-size", "10px")
+	.attr('font-weight', 'bold')
 	.attr("alignment-baseline","middle")
 
 	// legend: along ring regeneration SHAPE
@@ -105,6 +109,7 @@ function legend() {
 	  .attr("y", (legend_y + (2*y_incr) + y_incr + y_incr + y_incr))
 	  .text("Along Ring")
 	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
 
 	// legend: full length regeneration SHAPE
@@ -121,6 +126,7 @@ function legend() {
 	  .attr("y", (legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr))
 	  .text("Full Length")
 	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
 	  
 }
