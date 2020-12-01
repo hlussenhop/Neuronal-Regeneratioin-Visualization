@@ -41,7 +41,7 @@ function dot_plot_chart() {
 
 	function returned(data) {
 
-		let margin = { top: 10, right: 30, bottom: 30, left: 100 },
+		let margin = { top: 10, right: 60, bottom: 30, left: 100 },
 			width = 690 - margin.left - margin.right,
 			height = 510 - margin.top - margin.bottom;
 
@@ -50,7 +50,7 @@ function dot_plot_chart() {
 		let svg = d3
 			.select("#dot_plot")
 			.append("svg")
-			.attr("width", width + margin.left + margin.right)
+			.attr("width", width + margin.left + margin.right + 50)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -226,7 +226,7 @@ function dot_plot_chart() {
 			// add the text/labels in the
 			svg
 				.append("text")
-				.attr("x", -5)
+				.attr("x", 5)
 				.attr("y", 10)
 				.attr("class", "chartText")
 				.text(
@@ -246,7 +246,7 @@ function dot_plot_chart() {
 
 			svg
 				.append("text")
-				.attr("x", 360)
+				.attr("x", 380)
 				.attr("y", 50)
 				.attr("class", "chartText")
 				.text("Young Adult cut, 24 reimage");
