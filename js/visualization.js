@@ -46,7 +46,7 @@
 			(d);
 
 
-
+		/*
 		dotPlot.selectionDispatcher()
 			.on("updateSelection.test2", function (x) {
 				stacked1.highlightBar(x[0]);
@@ -54,17 +54,12 @@
 
 		dotPlot.selectionDispatcher()
 			.on("end.test3", function (x) {
-				console.log("deselected");
-				console.log(x[0]);
+				//console.log("deselected");
+				//console.log(x[0]);
 				stacked1.deselectBar(x[0]);
 			})
 
-		dotPlot.selectionDispatcher()
-			.on("updateBrush", function (x) {
-				for (let i = 0; i < x.length; i++) {
-					stacked1.highlightBar(x[i]);
-				}
-			})
+			*/
 
 		dotPlot.selectionDispatcher()
 			.on("deselectBrush", function (x) {
@@ -72,6 +67,16 @@
 					stacked1.deselectBar(x[i]);
 				}
 			})
+
+		dotPlot.selectionDispatcher()
+			.on("updateBrush", function (x) {
+				//console.log("x is: " + JSON.stringify(x[0]))
+				for (let i = 0; i < x.length; i++) {
+					stacked1.highlightBar(x[i]);
+				}
+			})
+
+
 
 
 

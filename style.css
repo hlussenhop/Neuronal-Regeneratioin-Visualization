@@ -104,7 +104,13 @@ circle.selected {
 }
 
 .chartText{
-fill: black;
+	fill: black;
+	pointer-events:none
+}
+
+.axisText{
+	font-weight: bold;
+	pointer-events:none
 }
   
 .regen0 {
@@ -136,4 +142,14 @@ fill: black;
 	border: 1px solid black;
 	stroke: black;
 
+}
+
+
+
+.tooltip_text{
+	fill: black
+}
+
+.deselected_text{
+	opacity: 0
 }

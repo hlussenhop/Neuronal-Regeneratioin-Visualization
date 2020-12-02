@@ -52,7 +52,8 @@ function stacked_bar_chart() {
 
 			// create y axis to dispay percentage
 			svg.append("g").call(d3.axisLeft(y1).tickFormat(d3.format('~%')))
-				.style("font-size", "12px");
+				.style("font-size", "12px")
+				
 
 			// chart labels
 			svg.append("text")
@@ -110,6 +111,20 @@ function stacked_bar_chart() {
 				.call(d3.axisBottom(x))
 				.style("font-size", "12px")
 				.attr('font-weight', 'bold');
+
+				svg
+					.selectAll(".bar")
+					.data(data)
+					.enter()
+					.append("rect")
+					.attr("x", function(d){
+						console.log(d)
+						return x(d.col_name) - 15
+					})
+					.attr("y", height - 53)
+					.attr("width", 45)
+					.attr("height", 10)
+					.attr("opacity", 0)
 
 			// add bars to the stacked bar chart
 			
@@ -216,20 +231,26 @@ function stacked_bar_chart() {
 			
 
 		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected_bar", true)
+
+		
 		return returned;
 	}
 
 	//Deselect bars when dots are deselected with brushing
+	
 	returned.deselectBar = function (x) {
 		name = x.age + x.reImageTime + x.cutType + x.genetics
 		let thing1 = d3.select(d3.selectAll(document.getElementsByClassName(name)))
 		d3.selectAll(document.getElementsByClassName(name)).style('opacity', function() {
 			return (this === thing1) ? 0.5 : 1;
 			})
+		
+			
 		d3.select(d3.selectAll(document.getElementsByClassName(name))._groups[0][x.regenType]).classed("selected_bar", false)
 		return returned;
 
 	}
+	
 
 	return returned;
 }
