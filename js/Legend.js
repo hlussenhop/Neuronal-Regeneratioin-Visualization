@@ -129,6 +129,53 @@ function legend() {
 	  .style("font-size", "10px")
 	  .attr('font-weight', 'bold')
 	  .attr("alignment-baseline","middle")
-	  
+	
+	// legend: statistic * SHAPE
+	svg_stack_bar.append("text")
+	  .attr("x",(legend_x + y_incr + 10))
+	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + y_incr))
+	  .text("*")
+	  .style("font-size", "30px")
+	  .attr('font-weight', 'bold')
+	  .attr("alignment-baseline","middle")
+	  .attr("class", "legendText");
+	
+	// legend: statistic * TEXT
+	svg_stack_bar.append("text")
+	  .attr("x",(legend_x + y_incr + x_incr + x_incr + x_incr + x_incr))
+	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + (y_incr / 1.5)))
+	  .text("P < 0.05")
+	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
+	  .attr("alignment-baseline","middle")
+	
+	// legend: statistic ** SHAPE (L)
+	svg_stack_bar.append("text")
+	  .attr("x",(legend_x + y_incr + 17))
+	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + y_incr + y_incr + (y_incr / 4)))
+	  .text("*")
+	  .style("font-size", "30px")
+	  .attr('font-weight', 'bold')
+	  .attr("alignment-baseline","middle")
+	  .attr("class", "legendText");
+	
+	// legend: statistic ** SHAPE (R)
+	svg_stack_bar.append("text")
+	  .attr("x",(legend_x + y_incr + 3))
+	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + y_incr + y_incr + (y_incr / 4)))
+	  .text("*")
+	  .style("font-size", "30px")
+	  .attr('font-weight', 'bold')
+	  .attr("alignment-baseline","middle")
+	  .attr("class", "legendText");
+	
+	// legend: statistic ** TEXT
+	svg_stack_bar.append("text")
+	  .attr("x",(legend_x + y_incr + x_incr + x_incr + x_incr + x_incr))
+	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + (y_incr / 1.5) + y_incr + (y_incr / 4)))
+	  .text("P < 0.05")
+	  .style("font-size", "10px")
+	  .attr('font-weight', 'bold')
+	  .attr("alignment-baseline","middle")
 }
 legend();

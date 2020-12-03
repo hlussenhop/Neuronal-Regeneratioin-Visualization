@@ -44,8 +44,8 @@ function dot_plot_chart() {
         .scaleLinear()
         .domain([0, 100])
         .range([height - 20, 70]);
-	  svg.append("g").call(d3.axisLeft(y)).style("font-size", "12px")
-	  .attr("class", "axisText");
+	  svg.append("g").call(d3.axisLeft(y)).style("font-size", "12px");
+	  
 
       //construct x axis
       let x = d3

@@ -108,6 +108,10 @@ circle.selected {
 	pointer-events:none
 }
 
+.legendText{
+	pointer-events:none
+}
+
 .axisText{
 	font-weight: bold;
 	pointer-events:none
