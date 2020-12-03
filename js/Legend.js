@@ -147,6 +147,7 @@ function legend() {
 	  .text("P < 0.05")
 	  .style("font-size", "10px")
 	  .attr('font-weight', 'bold')
+	  .attr("font-style", "italic")
 	  .attr("alignment-baseline","middle")
 	
 	// legend: statistic ** SHAPE (L)
@@ -173,9 +174,10 @@ function legend() {
 	svg_stack_bar.append("text")
 	  .attr("x",(legend_x + y_incr + x_incr + x_incr + x_incr + x_incr))
 	  .attr("y",(legend_y + (2*y_incr) + y_incr + y_incr + y_incr + y_incr + y_incr + (y_incr / 1.5) + y_incr + (y_incr / 4)))
-	  .text("P < 0.05")
+	  .text("P < 0.001")
 	  .style("font-size", "10px")
 	  .attr('font-weight', 'bold')
+	  .attr("font-style", "italic")
 	  .attr("alignment-baseline","middle")
 }
 legend();

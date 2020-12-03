@@ -2,7 +2,7 @@ function dot_plot_chart() {
   let dispatcher;
 
   function returned(data) {
-    let margin = { top: 20, right: 60, bottom: 30, left: 100 },
+    let margin = { top: 70, right: 60, bottom: 30, left: 100 },
       width = 690 - margin.left - margin.right,
       height = 520 - margin.top - margin.bottom;
 
@@ -109,11 +109,191 @@ function dot_plot_chart() {
 		.attr("x",1)
 		.attr("y",2)
 		.attr("id", "tooltip_text")
-		.attr("class", "tooltip_text")
-
-
-
-	
+    .attr("class", "tooltip_text")
+    
+  // ----------------------------------------
+  // Statistic bars
+  // Statistic bar: L2 cut, 12hr reimage
+  svg.append("rect") // horizontal
+		.attr("x",10)
+		.attr("y",50)
+		.attr("height", 1)
+		.attr("width", 150)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // L tick
+		.attr("x",10)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // R tick
+		.attr("x",160)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // M tick
+		.attr("x",85)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("text") // L (L **) 
+	  .attr("x", 47.5 - 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // L (R **) 
+	  .attr("x", 47.5 + 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (L **) 
+	  .attr("x", 122.5 - 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (R **) 
+	  .attr("x", 122.5 + 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  
+  
+  // Statistic bar: L2 cut, 24hr reimage
+  svg.append("rect") // horizontal
+		.attr("x",188)
+		.attr("y",50)
+		.attr("height", 1)
+		.attr("width", 150)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // L tick
+		.attr("x",188)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // R tick
+		.attr("x",338)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // M tick
+		.attr("x",263)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("text") // L *
+	  .attr("x", 225.5)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (L **) 
+	  .attr("x", 300.5 - 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (R **) 
+	  .attr("x", 300.5 + 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+	  
+	  
+  
+  // Statistic bar: YA cut, 24hr reimage
+  svg.append("rect") // horizontal
+		.attr("x",364)
+		.attr("y",50)
+		.attr("height", 1)
+		.attr("width", 150)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // L tick
+		.attr("x",364)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // R tick
+		.attr("x",514)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("rect") // M tick
+		.attr("x",439)
+		.attr("y",50)
+		.attr("height", 10)
+		.attr("width", 2)
+    .attr("fill", "black")
+    .attr("class", "unselectable")
+  svg.append("text") // L (L **) 
+	  .attr("x", 401.5 - 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // L (R **) 
+	  .attr("x", 401.5 + 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (L **) 
+	  .attr("x", 476.5 - 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+  svg.append("text") // R (R **) 
+	  .attr("x", 476.5 + 7)
+	  .attr("y", 55)
+	  .text("*")
+	  .style("font-size", "30px")
+    .attr('font-weight', 'bold')
+    .attr("text-anchor", "middle")
+    .attr("class", "chartText")
+	// ---------------------------------------
 
       let selected;
 
@@ -288,7 +468,7 @@ function dot_plot_chart() {
       svg
         .append("text")
         .attr("x", -33)
-        .attr("y", -5)
+        .attr("y", -40)
         .attr("class", "chartText")
         .text(
           "Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
@@ -306,42 +486,42 @@ function dot_plot_chart() {
       svg
         .append("text")
         .attr("x", 30)
-        .attr("y", 30)
+        .attr("y", 0)
         .attr("class", "chartText")
         .text("L2 cut,");
 
       svg
         .append("text")
         .attr("x", 40)
-        .attr("y", 50)
+        .attr("y", 20)
         .attr("class", "chartText")
         .text("12 hr reimage");
 
       svg
         .append("text")
         .attr("x", 200)
-        .attr("y", 30)
+        .attr("y", 0)
         .attr("class", "chartText")
         .text("L2 cut,");
         
       svg
         .append("text")
         .attr("x", 210)
-        .attr("y", 50)
+        .attr("y", 20)
         .attr("class", "chartText")
         .text("24 hr reimage");
 
       svg
         .append("text")
         .attr("x", 370)
-        .attr("y", 30)
+        .attr("y", 0)
         .attr("class", "chartText")
         .text("Young Adult cut,");
 
       svg
         .append("text")
         .attr("x", 380)
-        .attr("y", 50)
+        .attr("y", 20)
         .attr("class", "chartText")
         .text("24 hr reimage");
 
