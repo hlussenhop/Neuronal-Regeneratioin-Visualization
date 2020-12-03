@@ -120,6 +120,10 @@ circle.selected {
 	font-weight: bold;
 	pointer-events:none
 }
+
+.pct_text{
+	pointer-events:none
+}
   
 .regen0 {
 	fill: purple;
