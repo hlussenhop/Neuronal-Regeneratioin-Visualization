@@ -2,9 +2,9 @@ function dot_plot_chart() {
   let dispatcher;
 
   function returned(data) {
-    let margin = { top: 10, right: 60, bottom: 30, left: 100 },
+    let margin = { top: 20, right: 60, bottom: 30, left: 100 },
       width = 690 - margin.left - margin.right,
-      height = 510 - margin.top - margin.bottom;
+      height = 520 - margin.top - margin.bottom;
 
     let ourBrush = null;
 
@@ -288,7 +288,7 @@ function dot_plot_chart() {
       svg
         .append("text")
         .attr("x", 5)
-        .attr("y", 10)
+        .attr("y", -5)
         .attr("class", "chartText")
         .text(
           "Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
@@ -300,27 +300,49 @@ function dot_plot_chart() {
         .attr("y", 495)
         .attr("class", "chartText")
         .text("Experimental Conditions");
+      
+      // column group labels
+      svg
+        .append("text")
+        .attr("x", 30)
+        .attr("y", 30)
+        .attr("class", "chartText")
+        .text("L2 cut,");
 
       svg
         .append("text")
-        .attr("x", 20)
+        .attr("x", 40)
         .attr("y", 50)
         .attr("class", "chartText")
-        .text("L2 cut, 12 reimage");
+        .text("12 hr reimage");
 
       svg
         .append("text")
         .attr("x", 200)
+        .attr("y", 30)
+        .attr("class", "chartText")
+        .text("L2 cut,");
+        
+      svg
+        .append("text")
+        .attr("x", 210)
         .attr("y", 50)
         .attr("class", "chartText")
-        .text("L2 cut, 24 reimage");
+        .text("24 hr reimage");
+
+      svg
+        .append("text")
+        .attr("x", 370)
+        .attr("y", 30)
+        .attr("class", "chartText")
+        .text("Young Adult cut,");
 
       svg
         .append("text")
         .attr("x", 380)
         .attr("y", 50)
         .attr("class", "chartText")
-        .text("Young Adult cut, 24 reimage");
+        .text("24 hr reimage");
 
       svg
         .append("text")
