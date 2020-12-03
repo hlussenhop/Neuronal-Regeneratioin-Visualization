@@ -70,7 +70,8 @@ function stacked_bar_chart() {
 			svg.append("text")
 				.attr("x", 40)
 				.attr("y", 490)
-				.text("Neuronal Percent Regeneration by Regeneration Type");
+				.text("Neuronal Percent Regeneration by Regeneration Type")
+				.attr('font-weight', 'bold');
 
 
 			// defines the subgroups within the stacked bar chart (type of regeneration)

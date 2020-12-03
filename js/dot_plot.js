@@ -287,12 +287,13 @@ function dot_plot_chart() {
       // add the text/labels in the
       svg
         .append("text")
-        .attr("x", 5)
+        .attr("x", -33)
         .attr("y", -5)
         .attr("class", "chartText")
         .text(
           "Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
-        );
+        )
+        .attr('font-weight', 'bold');
 
       svg
         .append("text")
