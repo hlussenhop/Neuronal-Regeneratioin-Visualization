@@ -33,7 +33,7 @@ function dot_plot_chart() {
     }
 
     function dotPlotShow(data, stddata, age, step) {
-      stddata = fixStdevData(stddata,age);
+      stddata = fixStdevData(stddata, age);
       console.log(stddata);
       // modify datasets so they can be used with the dot plot
       data = fixData(data, age);
@@ -44,8 +44,7 @@ function dot_plot_chart() {
         .scaleLinear()
         .domain([0, 100])
         .range([height - 20, 70]);
-	  svg.append("g").call(d3.axisLeft(y)).style("font-size", "12px");
-	  
+      svg.append("g").call(d3.axisLeft(y)).style("font-size", "12px");
 
       //construct x axis
       let x = d3
@@ -59,241 +58,212 @@ function dot_plot_chart() {
         .attr("transform", "translate(-16," + (height - 20) + ")")
         .call(d3.axisBottom(x))
         .style("font-size", "12px")
-		.attr("font-weight", "bold")
-		.attr("class", "axisText");
+        .attr("font-weight", "bold")
+        .attr("class", "axisText");
 
-	svg
-	.selectAll(".bar")
-	.data(stddata)
-	.enter()
-	.append("rect")
-	.attr("x", function(d){
-		console.log(d.category)
-		return x(d.category) - 15
-	})
-	.attr("y", height - 13)
-	.attr("width", 45)
-	.attr("height", 10)
-	.attr("opacity", 0)
-	.on("mouseover",function(d, b){
-		//d3.selectAll(document.getElementsByClassName("tooltip_text"))
-		//	.attr("class","chartText")
-		text = b.category
-		//d3.selectAll(document.getElementsByClassName("tooltip_text")).attr("class","chartText")
+      // ----------------------------------------
+      // Statistic bars
+      // Statistic bar: L2 cut, 12hr reimage
+      svg
+        .append("rect") // horizontal
+        .attr("x", 10)
+        .attr("y", 50)
+        .attr("height", 1)
+        .attr("width", 150)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // L tick
+        .attr("x", 10)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // R tick
+        .attr("x", 160)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // M tick
+        .attr("x", 85)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("text") // L (L **)
+        .attr("x", 47.5 - 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // L (R **)
+        .attr("x", 47.5 + 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (L **)
+        .attr("x", 122.5 - 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (R **)
+        .attr("x", 122.5 + 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
 
-		//d3.selectAll('#tooltip_text').attr("class","chartText").text(text)
-		console.log(b)
+      // Statistic bar: L2 cut, 24hr reimage
+      svg
+        .append("rect") // horizontal
+        .attr("x", 188)
+        .attr("y", 50)
+        .attr("height", 1)
+        .attr("width", 150)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // L tick
+        .attr("x", 188)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // R tick
+        .attr("x", 338)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // M tick
+        .attr("x", 263)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("text") // L *
+        .attr("x", 225.5)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (L **)
+        .attr("x", 300.5 - 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (R **)
+        .attr("x", 300.5 + 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
 
-		d3.selectAll(document.getElementsByClassName("tooltip_text")).text(b.category).attr("x", this.x.baseVal.value).attr("y", this.y.baseVal.value)
-
-		console.log(d3.selectAll(document.getElementsByClassName("tooltip_text")))
-		tooltip_box = d3.select(document.getElementsByClassName("tooltip_box"))
-		if(d.category == "wt axon"){
-
-		} else if(d.category == "wt a+d"){
-
-		} else if(d.category == "dlk-1 a+d"){
-
-		}
-	})
-
-	svg.append("rect")
-		.attr("x",1)
-		.attr("y",2)
-		.attr("height", 20)
-		.attr("width", 100)
-		.attr("class","tooltip_box")
-		.attr("fill", "white")
-
-	svg.append("text")
-		.attr("x",1)
-		.attr("y",2)
-		.attr("id", "tooltip_text")
-    .attr("class", "tooltip_text")
-    
-  // ----------------------------------------
-  // Statistic bars
-  // Statistic bar: L2 cut, 12hr reimage
-  svg.append("rect") // horizontal
-		.attr("x",10)
-		.attr("y",50)
-		.attr("height", 1)
-		.attr("width", 150)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // L tick
-		.attr("x",10)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // R tick
-		.attr("x",160)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // M tick
-		.attr("x",85)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("text") // L (L **) 
-	  .attr("x", 47.5 - 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // L (R **) 
-	  .attr("x", 47.5 + 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (L **) 
-	  .attr("x", 122.5 - 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (R **) 
-	  .attr("x", 122.5 + 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  
-  
-  // Statistic bar: L2 cut, 24hr reimage
-  svg.append("rect") // horizontal
-		.attr("x",188)
-		.attr("y",50)
-		.attr("height", 1)
-		.attr("width", 150)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // L tick
-		.attr("x",188)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // R tick
-		.attr("x",338)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // M tick
-		.attr("x",263)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("text") // L *
-	  .attr("x", 225.5)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (L **) 
-	  .attr("x", 300.5 - 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (R **) 
-	  .attr("x", 300.5 + 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-	  
-	  
-  
-  // Statistic bar: YA cut, 24hr reimage
-  svg.append("rect") // horizontal
-		.attr("x",364)
-		.attr("y",50)
-		.attr("height", 1)
-		.attr("width", 150)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // L tick
-		.attr("x",364)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // R tick
-		.attr("x",514)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("rect") // M tick
-		.attr("x",439)
-		.attr("y",50)
-		.attr("height", 10)
-		.attr("width", 2)
-    .attr("fill", "black")
-    .attr("class", "unselectable")
-  svg.append("text") // L (L **) 
-	  .attr("x", 401.5 - 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // L (R **) 
-	  .attr("x", 401.5 + 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (L **) 
-	  .attr("x", 476.5 - 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-  svg.append("text") // R (R **) 
-	  .attr("x", 476.5 + 7)
-	  .attr("y", 55)
-	  .text("*")
-	  .style("font-size", "30px")
-    .attr('font-weight', 'bold')
-    .attr("text-anchor", "middle")
-    .attr("class", "chartText")
-	// ---------------------------------------
+      // Statistic bar: YA cut, 24hr reimage
+      svg
+        .append("rect") // horizontal
+        .attr("x", 364)
+        .attr("y", 50)
+        .attr("height", 1)
+        .attr("width", 150)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // L tick
+        .attr("x", 364)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // R tick
+        .attr("x", 514)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("rect") // M tick
+        .attr("x", 439)
+        .attr("y", 50)
+        .attr("height", 10)
+        .attr("width", 2)
+        .attr("fill", "black")
+        .attr("class", "unselectable");
+      svg
+        .append("text") // L (L **)
+        .attr("x", 401.5 - 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // L (R **)
+        .attr("x", 401.5 + 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (L **)
+        .attr("x", 476.5 - 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      svg
+        .append("text") // R (R **)
+        .attr("x", 476.5 + 7)
+        .attr("y", 55)
+        .text("*")
+        .style("font-size", "30px")
+        .attr("font-weight", "bold")
+        .attr("text-anchor", "middle")
+        .attr("class", "chartText");
+      // ---------------------------------------
 
       let selected;
 
@@ -331,7 +301,7 @@ function dot_plot_chart() {
           .on("end", brushEnd)
           .extent([
             [-margin.left, -margin.bottom],
-            [width + margin.right, height + margin.top  - 23],
+            [width + margin.right, height + margin.top - 93],
           ]);
 
         ourBrush = brush;
@@ -388,15 +358,14 @@ function dot_plot_chart() {
 
           // do dispatch stuff
 
-
           let dispatchString = Object.getOwnPropertyNames(dispatcher._)[3];
           dispatcher.call(
             dispatchString,
             this,
             svg.selectAll(".deselected").data()
-		  );
+          );
 
-		  dispatchString = Object.getOwnPropertyNames(dispatcher._)[2];
+          dispatchString = Object.getOwnPropertyNames(dispatcher._)[2];
           dispatcher.call(
             dispatchString,
             this,
@@ -417,51 +386,51 @@ function dot_plot_chart() {
       //Add vertical bars to the dot plot
       //A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
 
-     // i = 0;
+      // i = 0;
 
       //if (i == 0) {
-        svg
-          .selectAll(".bar")
-          .data(stddata)
-          .enter()
-          .append("line")
-          .attr("x1", function (d) {
-            return x(d.category) + 6;
-          })
-          .attr("x2", function (d) {
-            return x(d.category) + 6;
-          })
-          .attr("y1", function (d) {
-            return y(d.average - d.stdev);
-          })
-          .attr("y2", function (d) {
-            return y(d.average + d.stdev);
-          })
-          .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
+      svg
+        .selectAll(".bar")
+        .data(stddata)
+        .enter()
+        .append("line")
+        .attr("x1", function (d) {
+          return x(d.category) + 6;
+        })
+        .attr("x2", function (d) {
+          return x(d.category) + 6;
+        })
+        .attr("y1", function (d) {
+          return y(d.average - d.stdev);
+        })
+        .attr("y2", function (d) {
+          return y(d.average + d.stdev);
+        })
+        .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
-        // add a horizontal bar to the data
-        // shows the location of the average length of the dots and makes the data more readable
-        svg
-          .selectAll(".bar")
-          .data(stddata)
-          .enter()
-          .append("line")
-          .attr("x1", function (d) {
-            console.log(d);
-            return x(d.category) - 12;
-          })
-          .attr("x2", function (d) {
-            return x(d.category) + 24;
-          })
-          .attr("y1", function (d) {
-            return y(d.average);
-          })
-          .attr("y2", function (d) {
-            return y(d.average);
-          })
-          .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
+      // add a horizontal bar to the data
+      // shows the location of the average length of the dots and makes the data more readable
+      svg
+        .selectAll(".bar")
+        .data(stddata)
+        .enter()
+        .append("line")
+        .attr("x1", function (d) {
+          console.log(d);
+          return x(d.category) - 12;
+        })
+        .attr("x2", function (d) {
+          return x(d.category) + 24;
+        })
+        .attr("y1", function (d) {
+          return y(d.average);
+        })
+        .attr("y2", function (d) {
+          return y(d.average);
+        })
+        .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
-        i++;
+      i++;
       //}
 
       // add the text/labels in the
@@ -473,15 +442,15 @@ function dot_plot_chart() {
         .text(
           "Dendrite Cuts on Axon Regeneration in Wild Type (wt) and DLK-1 Mutants"
         )
-        .attr('font-weight', 'bold');
+        .attr("font-weight", "bold");
 
       svg
         .append("text")
         .attr("x", 160)
-        .attr("y", 495)
+        .attr("y", 440)
         .attr("class", "chartText")
         .text("Experimental Conditions");
-      
+
       // column group labels
       svg
         .append("text")
@@ -503,7 +472,7 @@ function dot_plot_chart() {
         .attr("y", 0)
         .attr("class", "chartText")
         .text("L2 cut,");
-        
+
       svg
         .append("text")
         .attr("x", 210)
@@ -534,6 +503,99 @@ function dot_plot_chart() {
         .text("Length Regenerated (um)");
 
       fixCircles();
+
+      svg
+        .append("rect")
+        .attr("x", 1)
+        .attr("y", 2)
+        .attr("height", 30)
+        .attr("width", 100)
+        .attr("class", "tooltip_box")
+        .attr("fill", "white")
+        .attr("opacity", 0);
+
+      svg
+        .append("text")
+        .attr("x", 1)
+        .attr("y", 2)
+        .attr("id", "tooltip_text")
+        .attr("class", "tooltip_text")
+        .attr("opacity", 0);
+
+      svg
+        .selectAll(".bar")
+        .data(stddata)
+        .enter()
+        .append("rect")
+        .attr("x", function (d) {
+          console.log(d.category);
+          return x(d.category) - 15;
+        })
+        .attr("y", height - 13)
+        .attr("width", 45)
+        .attr("height", 15)
+        .attr("opacity", 0)
+        .attr("id", function (d) {
+          return d.stdev;
+        })
+        .on("mouseover", function (d, b) {
+          text = "";
+          width = 400;
+          height = 0;
+          x = this.x.baseVal.value;
+
+          if (b.category == "wt axon") {
+            text = "Wild-type ASJ neuron, only axon is cut";
+            x = 110;
+            width = 320;
+          } else if (b.category == "wt a+d") {
+            text =
+              "Wild-type ASJ neuron,\
+            axon and dendrite are cut";
+            x = 70;
+            width = 405;
+          } else if (b.category == "dlk-1 a+d") {
+            text =
+              "DLK-1-independent ASJ neuron," +
+              "\n" +
+              "axon and dendrite are cut";
+            x = 30;
+            width = 480;
+          }
+
+          d3.selectAll(document.getElementsByClassName("tooltip_text"))
+            .text(text)
+            .attr("x", x)
+            .attr("y", this.y.baseVal.value - 15)
+            .attr("opacity", 1);
+
+          console.log();
+
+          d3.selectAll(document.getElementsByClassName("tooltip_box"))
+            .attr("x", x - 5)
+            .attr("y", this.y.baseVal.value - 35)
+            .attr("width", width)
+            .attr("opacity", 1);
+
+          ///d3.select(this).attr("class","invis_box")
+        })
+        .on("mouseout", function (d, b) {
+          d3.selectAll(document.getElementsByClassName("tooltip_box")).attr(
+            "opacity",
+            0
+          );
+
+          d3.selectAll(document.getElementsByClassName("tooltip_text")).attr(
+            "opacity",
+            0
+          );
+
+          //d3.select(this).attr("class","")
+        })
+        .on("mousedown", function (d) {})
+        .on("mouseup", function (d) {
+          //console.clear()
+        });
     }
 
     // Adds a 'category' column to the data which is used to match the data to its categorical data channel

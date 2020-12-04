@@ -126,6 +126,9 @@ function stacked_bar_chart() {
 					.attr("width", 45)
 					.attr("height", 10)
 					.attr("opacity", 0)
+					.attr("id", function(d){
+						console.log(d)
+					})
 
 			// add bars to the stacked bar chart
 			
@@ -209,6 +212,8 @@ function stacked_bar_chart() {
 				return d.data.ageBar + d.data.reImageTimeBar2 + d.data.cutTypeBar + d.data.geneticsBar
 			}
 		}
+
+		
 
 		return returned;
 	}
