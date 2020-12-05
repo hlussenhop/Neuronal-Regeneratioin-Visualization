@@ -51,14 +51,14 @@
       known neuronal regeneration signaling factors. Through the use of
       an interactive web-based visualization, the goal of this project is
       to effectively communicate the novel neuronal regeneration data to
-      other researchers and to possibly make the data more accessible to
-      those with non-science backgrounds.</p>
+      other researchers and to elucidate key data trends found across the various experimental conditions/groups.
+      The visualization consists of stacked bar charts and dot plots to display the neuronal regeneration data. 
+      The linking of the charts enables users to extract key information when examining specific data. 
+      Together, the dot plots and the stacked bar charts enable the user to compare novel neuronal regeneration data across 
+      the different experimental conditions/groups and to interpret any newly-evident significant data findings.</p>
 
     
     <h1>Visualization</h1>
-    
-    <p>Include the interactive visualization as part of this page. Static example follows.</p>
-
     
   </div>
   
@@ -101,7 +101,57 @@
 
     <h1>Visualization explanation</h1>
     
-    <p>Replace with a brief explanation (can be copied from the paper) and linked presentation slides.</p>
+    <p>
+      The current visualization contains linked stacked bar charts and dot plots. The dot plots display the length of 
+      axon regeneration given three experimental conditions (wt axon, wt a+d, DLK-1 a+d) for three different cohort groups 
+      (L2 cut 12 hr reimage, L2 cut 24 hr reimage, Young adult cut, 24 hr reimage) for a total of nine plots. 
+      Stacked bar charts are organized below each of the nine dot plots with data displaying the 
+      distribution of regeneration types that correspond to the dots in the respective dot plot. When a dot in a dot plot 
+      is brushed over, the bar corresponding to that dot’s regeneration type is highlighted. 
+      If multiple dots in a dot plot are brushed over, all the respective bars corresponding to the selected dots are highlighted. 
+      The linking between the dots in the dot plots and their corresponding regeneration type in the stacked bar charts persists 
+      even when selecting dots across different dot plots (i.e. selecting dots in L2 cut, 12 hr reimage and dots in L2 cut, 24 hr reimage). 
+      In addition, when dots are selected via brushing, the dots are colored corresponding to their respective regeneration type 
+      in accordance with the color scheme in the legend and in the stacked bar charts. The dots are normally filled black if not brushed 
+      to allow the user to see the overall data points without the confusion that may be experienced if the user sees many colorful dots 
+      in a small viewing area.
+    </p>
+
+    <p>
+      When a bar within the stacked bar chart is moused over, the bar becomes highlighted and utilizes a detail-on-demand feature: 
+      displaying the relative percentage of the selected bar’s regeneration type in comparison to the other regeneration types found 
+      within the dots that correspond with the selected bar. In addition, the bar that is moused over also colors in the dots that correspond 
+      to the selected bar’s regeneration type. For example, if a red bar within a stacked bar chart is moused over, the percentage 
+      of that regeneration type in relation to all the regeneration types in that group is visible and all the dots that correspond 
+      to the red bar are filled in red. 
+    </p>
+
+    <p>
+      The linking between the stacked bar charts and the dot plots is intended to provide the user with dynamic feedback 
+      when exploring the data and should aid the user in analyzing and comparing the data with useful contextual information 
+      (i.e. the dot plots data along with the stacked bar charts data should allow for contextualized data results that aid in 
+      data interpretation/analysis). 
+    </p>
+
+    <p>
+      The dot plots contain a tool-tip functionality for the three types of experimental conditions 
+      (wt axon, wt a+d, DLK-1 a+d). When the experimental condition is moused over, the tooltip displays a text box that 
+      contains more details about the selected experimental condition to aid the user in interpreting the data. The purpose of the 
+      tooltip is to reduce any confusion about the contextual significance of the dot plots data. The tooltip is not included for the 
+      stacked bar charts since they contain the same experimental groups as the dot plots (repeating the same information is unnecessary).
+    </p>
+
+    <p>
+      The legend is positioned to the right of both the stacked bar charts and the dot plots to provide the user an easy 
+      reference point when interpreting the color encodings found throughout the visualization. Throughout the visualization, 
+      five different colors were used: purple, blue, green, yellow, red. All colors had the same saturation and brightness, only 
+      differing in hue. These colors were selected to differentiate the types of regeneration (categorical data) because their 
+      stark contrast with each other reduces any ambiguity when a user attempts to visually gauge the regeneration 
+      type of a dot or bar. The colors are all distinct from each other, which aids in establishing clear visual differentiations 
+      between the different regeneration types. All the colors were given the same saturation and brightness to eliminate any 
+      potential data importance/magnitude interpretations of the categorical data. The legend also includes information about 
+      the statistical tests performed (denoted by * or **) that are present in the dot plots. 
+    </p>
     
     <h1>Acknowledgments</h1>
 
