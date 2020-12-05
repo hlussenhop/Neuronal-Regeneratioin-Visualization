@@ -10,6 +10,7 @@ function dot_plot_chart() {
 
     let svg = d3
       .select("#dot_plot")
+      .attr("class", "vis-svg")
       .append("svg")
       .attr("width", width + margin.left + margin.right + 50)
       .attr("height", height + margin.top + margin.bottom)
@@ -301,7 +302,7 @@ function dot_plot_chart() {
           .on("end", brushEnd)
           .extent([
             [-margin.left, -margin.bottom],
-            [width + margin.right, height + margin.top - 93],
+            [width + margin.right, height + margin.top - 83],
           ]);
 
         ourBrush = brush;
@@ -545,14 +546,27 @@ function dot_plot_chart() {
           x = this.x.baseVal.value;
 
           if (b.category == "wt axon") {
+            if(step == 1){
+              x = 30;
+            } else if (step == 2) {
+              x = 110;
+            } else if (step == 3){
+              x = 200
+            }
             text = "Wild-type ASJ neuron, only axon is cut";
-            x = 110;
             width = 320;
           } else if (b.category == "wt a+d") {
+            if(step == 1){
+              x = 30;
+            } else if (step == 2) {
+              x = 70;
+            } else if (step == 3){
+              x = 110
+            }
             text =
               "Wild-type ASJ neuron,\
             axon and dendrite are cut";
-            x = 70;
+
             width = 405;
           } else if (b.category == "dlk-1 a+d") {
             text =
