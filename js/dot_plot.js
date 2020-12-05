@@ -554,7 +554,7 @@ function dot_plot_chart() {
               x = 200
             }
             text = "Wild-type ASJ neuron, only axon is cut";
-            width = 320;
+            width = 330;
           } else if (b.category == "wt a+d") {
             if(step == 1){
               x = 30;
@@ -567,14 +567,14 @@ function dot_plot_chart() {
               "Wild-type ASJ neuron,\
             axon and dendrite are cut";
 
-            width = 405;
+            width = 415;
           } else if (b.category == "dlk-1 a+d") {
             text =
               "DLK-1-independent ASJ neuron," +
               "\n" +
               "axon and dendrite are cut";
             x = 30;
-            width = 480;
+            width = 490;
           }
 
           d3.selectAll(document.getElementsByClassName("tooltip_text"))

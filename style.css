@@ -22,8 +22,12 @@ h1, h2, h3 {
 }
 
 .vis-svg {
-  background-color: #f4f1f0;
+  background-color: white;
 }
+
+//#dot_plot{
+//	color: #f4f1f0;
+//}
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
