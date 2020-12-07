@@ -35,7 +35,6 @@ function dot_plot_chart() {
 
     function dotPlotShow(data, stddata, age, step) {
       stddata = fixStdevData(stddata, age);
-      console.log(stddata);
       // modify datasets so they can be used with the dot plot
       data = fixData(data, age);
       //avgData = fixData(avgData, age);
@@ -417,7 +416,6 @@ function dot_plot_chart() {
         .enter()
         .append("line")
         .attr("x1", function (d) {
-          console.log(d);
           return x(d.category) - 12;
         })
         .attr("x2", function (d) {
@@ -529,7 +527,6 @@ function dot_plot_chart() {
         .enter()
         .append("rect")
         .attr("x", function (d) {
-          console.log(d.category);
           return x(d.category) - 15;
         })
         .attr("y", height - 13)
@@ -583,8 +580,6 @@ function dot_plot_chart() {
             .attr("y", this.y.baseVal.value - 15)
             .attr("opacity", 1);
 
-          console.log();
-
           d3.selectAll(document.getElementsByClassName("tooltip_box"))
             .attr("x", x - 5)
             .attr("y", this.y.baseVal.value - 35)
@@ -604,11 +599,11 @@ function dot_plot_chart() {
             0
           );
 
-          //d3.select(this).attr("class","")
+          
         })
         .on("mousedown", function (d) {})
         .on("mouseup", function (d) {
-          //console.clear()
+          
         });
     }
 
@@ -719,10 +714,10 @@ function dot_plot_chart() {
     if (x.data.geneticsBar == "wild-type") {
       genetics = "wt";
     }
-    console.log(x.data);
+    
     compositeCategoryBar =
       genetics + x.data.cutTypeBar + x.data.ageBar + x.data.reImageTimeBar2;
-    console.log(compositeCategoryBar);
+    
 
     switch (r) {
       case "none":
@@ -752,7 +747,6 @@ function dot_plot_chart() {
   };
 
   returned.deselectDot = function (x) {
-    console.log("working");
     d3.selectAll("circle").classed("regen0", false);
     d3.selectAll("circle").classed("regen1", false);
     d3.selectAll("circle").classed("regen2", false);
@@ -766,7 +760,6 @@ function dot_plot_chart() {
 
   // Gets or sets the dispatcher we use for selection events
   returned.selectionDispatcher = function (_) {
-    //console.log("selection dispatcher dot");
     if (!arguments.length) return dispatcher;
     dispatcher = _;
     return returned;

@@ -4,10 +4,6 @@ function stacked_bar_chart() {
 	let dispatcher;
 	function returned(data) {
 
-		//let dispatcher = d3.dispatch("selectionUpdated");
-
-		//console.log("returned begins");
-
 
 		let margin = { top: 50, right: 30, bottom: 30, left: 100 },
 			width = 650 - margin.left - margin.right,
@@ -42,8 +38,6 @@ function stacked_bar_chart() {
 
 			// filter the data
 			data = data.filter(divideByReimage(age));
-
-			// console.log(data);
 
 			// define domain and range of the y axis
 			let y1 = d3.scaleLinear()
@@ -119,7 +113,6 @@ function stacked_bar_chart() {
 					.enter()
 					.append("rect")
 					.attr("x", function(d){
-						console.log(d)
 						return x(d.col_name) - 15
 					})
 					.attr("y", height - 53)
@@ -127,7 +120,6 @@ function stacked_bar_chart() {
 					.attr("height", 10)
 					.attr("opacity", 0)
 					.attr("id", function(d){
-						console.log(d)
 					})
 
 			// add bars to the stacked bar chart
@@ -142,12 +134,10 @@ function stacked_bar_chart() {
 				.attr("class", barColor)
 				.selectAll("rect")
 				.data(function (d) {
-					//console.log("d: "+ d)  
 					return d;
 				})
 				.enter().append("rect")
 				.attr("x", function (d) {
-					//console.log(d)
 					return x1(d.data.col_name);
 				})
 				.attr("y", function (d) { return y1(d[1]); })
@@ -158,13 +148,6 @@ function stacked_bar_chart() {
 				.on("mouseover", highlight)
 				// deselect bars and delete text
 				.on("mouseout", function (d) {
-					/*
-					compositeCategoryBar = d.genetics + d.cutTypeBar + d.ageBar + d.reImageTimeBar2
-					let thing1 = compositeCategoryBar;
-					d3.selectAll(document.getElementsByClassName(compositeCategoryBar)).style('opacity', function() {
-					return (this === thing1) ? 1 : 1;
-				})
-				*/
 					d3.select(this).classed("selected_bar", false)
 					d3.selectAll(document.getElementsByClassName("pct_text")).remove()
 					let dispatchString = Object.getOwnPropertyNames(dispatcher._)[4];
@@ -175,18 +158,10 @@ function stacked_bar_chart() {
 
 			//Highlight a bar and add text upon mouseover
 			function highlight(d) {
-				/*compositeCategoryBar = d.genetics + d.cutTypeBar + d.ageBar + d.reImageTimeBar2
-				let thing = compositeCategoryBar
-				d3.selectAll(document.getElementsByClassName(compositeCategoryBar)).style('opacity', function() {
-					return (this === thing) ? 0.5 : 1;
-					
-				})
-				*/
 				d3.select(this).classed("selected_bar", true)
 				y1 = d3.select(this).data()[0][0]
 				y2 = d3.select(this).data()[0][1]
 				percent = ((y2 - y1) * 100).toFixed(0)
-				console.log(percent)
 
 				svg.append("text")
 					.attr("x", parseInt(d3.select(this).attr("x"), 10) + 5)
