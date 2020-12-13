@@ -1,3 +1,4 @@
+// Dot plot function
 function dot_plot_chart() {
   let dispatcher;
 
@@ -17,6 +18,7 @@ function dot_plot_chart() {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    // load in data related too the standard deviations of the regeneration data
     function dotPlot(data, age, step) {
       d3.csv("data/avg_stdev_data_csv.csv", function (data) {
         return {
@@ -265,8 +267,6 @@ function dot_plot_chart() {
         .attr("class", "chartText");
       // ---------------------------------------
 
-      let selected;
-
       // add dots to the dot-plot
       svg
         .selectAll(".bar")
@@ -385,10 +385,6 @@ function dot_plot_chart() {
 
       //Add vertical bars to the dot plot
       //A bar is centered on the average length of the dots, and has a length of twice the standard deviation of the length of the dots
-
-      // i = 0;
-
-      //if (i == 0) {
       svg
         .selectAll(".bar")
         .data(stddata)
@@ -430,7 +426,6 @@ function dot_plot_chart() {
         .attr("style", "stroke:rgb(80,80,80);stroke-width:2");
 
       i++;
-      //}
 
       // add the text/labels in the
       svg
@@ -503,6 +498,10 @@ function dot_plot_chart() {
 
       fixCircles();
 
+      // Handle tooltips
+      // ---------------------------
+      
+      //draw tooltip rectangle
       svg
         .append("rect")
         .attr("x", 1)
@@ -513,6 +512,7 @@ function dot_plot_chart() {
         .attr("fill", "white")
         .attr("opacity", 0);
 
+      // draw tooltip text
       svg
         .append("text")
         .attr("x", 1)
@@ -521,6 +521,8 @@ function dot_plot_chart() {
         .attr("class", "tooltip_text")
         .attr("opacity", 0);
 
+      // draw invisible rectangles over text that is supposed to be moused over for tooltips
+      // these rectangles themselves can be moused over to reveal a tooltip
       svg
         .selectAll(".bar")
         .data(stddata)
@@ -543,22 +545,22 @@ function dot_plot_chart() {
           x = this.x.baseVal.value;
 
           if (b.category == "wt axon") {
-            if(step == 1){
+            if (step == 1) {
               x = 30;
             } else if (step == 2) {
               x = 110;
-            } else if (step == 3){
-              x = 200
+            } else if (step == 3) {
+              x = 200;
             }
             text = "Wild-type ASJ neuron, only axon is cut";
             width = 330;
           } else if (b.category == "wt a+d") {
-            if(step == 1){
+            if (step == 1) {
               x = 30;
             } else if (step == 2) {
               x = 70;
-            } else if (step == 3){
-              x = 110
+            } else if (step == 3) {
+              x = 110;
             }
             text =
               "Wild-type ASJ neuron,\
@@ -585,8 +587,6 @@ function dot_plot_chart() {
             .attr("y", this.y.baseVal.value - 35)
             .attr("width", width)
             .attr("opacity", 1);
-
-          ///d3.select(this).attr("class","invis_box")
         })
         .on("mouseout", function (d, b) {
           d3.selectAll(document.getElementsByClassName("tooltip_box")).attr(
@@ -598,17 +598,13 @@ function dot_plot_chart() {
             "opacity",
             0
           );
-
-          
         })
         .on("mousedown", function (d) {})
-        .on("mouseup", function (d) {
-          
-        });
+        .on("mouseup", function (d) {});
     }
 
     // Adds a 'category' column to the data which is used to match the data to its categorical data channel
-    // filters data based on the age and reimaging time of the particular datapoint
+    // filters data based on the age and re-imaging time of the particular datapoint
     function fixData(data, age) {
       newData = [];
       for (i = 0; i < data.length; i++) {
@@ -648,10 +644,10 @@ function dot_plot_chart() {
           }
         }
       }
-
       return newData;
     }
 
+    // fixes standard deviation data, add a column to identify the type of experimental condition that is referred to
     function fixStdevData(data, age) {
       newData = [];
       for (i = 0; i < data.length; i++) {
@@ -686,7 +682,6 @@ function dot_plot_chart() {
           }
         }
       }
-
       return newData;
     }
 
@@ -714,10 +709,9 @@ function dot_plot_chart() {
     if (x.data.geneticsBar == "wild-type") {
       genetics = "wt";
     }
-    
+
     compositeCategoryBar =
       genetics + x.data.cutTypeBar + x.data.ageBar + x.data.reImageTimeBar2;
-    
 
     switch (r) {
       case "none":
@@ -755,8 +749,6 @@ function dot_plot_chart() {
     d3.selectAll("circle").classed("deselected", true);
     return returned;
   };
-
-  //construct a dot plot
 
   // Gets or sets the dispatcher we use for selection events
   returned.selectionDispatcher = function (_) {
